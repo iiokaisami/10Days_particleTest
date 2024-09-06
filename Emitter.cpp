@@ -23,7 +23,6 @@ void Emitter::Update(Vector2 pos, bool particleStart)
 		isEmit_ = 1;
 	}
 
-	//
 	for (auto itr = particleList.begin(); itr != particleList.end();) {
 
 		if (isEmit_ != 0)
