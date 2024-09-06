@@ -44,6 +44,7 @@ void BrockParticle::Update()
 		vel_.y = -3.0f;
 	}
 
+
 	if (!isDeath_)
 	{
 		if (timer_ > 0)

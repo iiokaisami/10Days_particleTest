@@ -159,7 +159,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 
-
 		emit->Update(pos, isStart);
 
 
