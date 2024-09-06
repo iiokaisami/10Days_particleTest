@@ -157,6 +157,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			}
 		}
 
+		if (isStart)
+		{
+			emit->Emit(pos);
+		}
 
 		// 出てくるposと出すタイミングのフラグをアップデートに引数で入れる
 		emit->Update(pos, isStart);

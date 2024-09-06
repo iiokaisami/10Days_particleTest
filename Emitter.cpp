@@ -6,36 +6,17 @@ Emitter::Emitter(){}
 
 void Emitter::Update(Vector2 pos, bool particleStart)
 {
-	if (particleStart && timer_==0) {
-		isEmit_ = 1;
-		timer_ = 0;
-	}
-	// 
-	if (isEmit_ == 1) {
-		timer_++;
-	}
-
-	// 
-	if (timer_ % interval_ == 0 &&timer_ < kTimerMax_ && isEmit_ == 1) {
-		Emitter::Emit({ pos.x,pos.y });
-	}
-	if (timer_ >= kTimerMax_) {
-		isEmit_ = 1;
-	}
-
+	particleStart;
+	pos;
 	for (auto itr = particleList.begin(); itr != particleList.end();) {
+		itr->Update();
 
-		if (isEmit_ != 0)
-		{
-			itr->Update();
-		}
-
-		// 
+		
 		if (itr->GetDeathFlag()) {
 			itr = particleList.erase(itr);
 		}
 		else {
-			itr++; //
+			itr++; 
 		}
 	}
 }

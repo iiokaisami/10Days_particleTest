@@ -41,7 +41,7 @@ void BrockParticle::Update()
 		isDeath_ = false;
 		timer_ = kParticleTime;
 
-		vel_.y = -3.0f;
+		vel_.y = -1.5f;
 	}
 
 

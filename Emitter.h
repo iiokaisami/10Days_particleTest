@@ -20,9 +20,9 @@ private:
 
 	std::list<BrockParticle> particleList;
 
-	int timer_ = 0; 
-	const int kTimerMax_ = 10; //
-	int interval_ = 1; 
+	//int timer_ = 0; 
+	//const int kTimerMax_ = 10; //
+	//int interval_ = 1; 
 	bool isEmit_ = 0;
 };
 
