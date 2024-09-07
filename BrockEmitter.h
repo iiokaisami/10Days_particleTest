@@ -5,11 +5,11 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-class Emitter{
+class BrockEmitter{
 public:
 	
-	~Emitter();
-	Emitter();
+	~BrockEmitter();
+	BrockEmitter();
 
 	void Update(Vector2 pos);
 	void Draw();

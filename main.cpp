@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #include "Vector2.h"
-#include "Emitter.h"
+#include "BrockEmitter.h"
 
 const int number = 8;
 
@@ -84,7 +84,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	
 
 
-	Emitter* emit = new Emitter();
+	BrockEmitter* brockEmit = new BrockEmitter();
 	
 	Vector2 pos = { 700,300 };
 	
@@ -147,15 +147,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		timer--;
 
 
-		// フラグが立った時にemit->Emit(pos)を呼び出す
+		// フラグが立った時にbrockEmit->Emit(pos)を呼び出す
 		if (timer==0)
 		{
-			emit->Emit(pos);
+			brockEmit->Emit(pos);
 			timer = 60;
 		}
 
 		// 出てくるposをアップデートに引数で入れる
-		emit->Update(pos);
+		brockEmit->Update(pos);
 
 
 
@@ -251,7 +251,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
-		emit->Draw();
+		brockEmit->Draw();
 		Novice::DrawEllipse((int)pos.x, (int)pos.y, 10, 10, 0.0f, WHITE, kFillModeSolid);
 
 		Novice::DrawQuad((int)Lt.x, (int)Lt.y, (int)Rt.x, (int)Rt.y, (int)Lb.x, (int)Lb.y, (int)Rb.x, (int)Rb.y, 0, 0, 80, 80, particlegh, WHITE);
@@ -279,7 +279,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 
-	delete emit;
+	delete brockEmit;
 
 	// ライブラリの終了
 	Novice::Finalize();

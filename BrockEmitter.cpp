@@ -1,10 +1,10 @@
-#include "Emitter.h"
+#include "BrockEmitter.h"
 
-Emitter::~Emitter(){}
+BrockEmitter::~BrockEmitter(){}
 
-Emitter::Emitter(){}
+BrockEmitter::BrockEmitter(){}
 
-void Emitter::Update(Vector2 pos)
+void BrockEmitter::Update(Vector2 pos)
 {
 	pos;
 	for (auto itr = particleList.begin(); itr != particleList.end();) {
@@ -20,14 +20,14 @@ void Emitter::Update(Vector2 pos)
 	}
 }
 
-void Emitter::Draw()
+void BrockEmitter::Draw()
 {
 	for (auto& particle : particleList) {
 		particle.Draw();
 	}
 }
 
-void Emitter::Emit(Vector2 pos)
+void BrockEmitter::Emit(Vector2 pos)
 {
 	// 
 	for (int i = 0; i <= kParticleNum_; i++)
