@@ -29,11 +29,14 @@ void Emitter::Draw()
 }
 
 void Emitter::Emit(Vector2 pos)
-{	 
+{
 	// 
-	float size = static_cast<float>(rand() % 40 + 80) * 0.1f;
+	for (int i = 0; i <= kParticleNum_; i++)
+	{
+		float size = static_cast<float>(rand() % 40 + 80) * 0.1f;
 
-	// 
-	BrockParticle newParticle = BrockParticle(pos, size);
-	particleList.push_back(newParticle);
+		// 
+		BrockParticle newParticle = BrockParticle(pos, size);
+		particleList.push_back(newParticle);
+	}
 }

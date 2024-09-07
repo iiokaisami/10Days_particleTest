@@ -144,16 +144,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 		
+		isStart = false;
 
 		if (keys[(DIK_SPACE)])
 		{
 			if (!isStart)
 			{
 				isStart = true;
-			}
-			else if (isStart)
-			{
-				isStart=false;
+				
 			}
 		}
 
@@ -258,6 +256,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
+
+		Novice::ScreenPrintf(0, 0, "Start", &isStart);
 
 		emit->Draw();
 		Novice::DrawEllipse((int)pos.x, (int)pos.y, 10, 10, 0.0f, WHITE, kFillModeSolid);
