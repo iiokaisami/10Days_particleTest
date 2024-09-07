@@ -4,9 +4,8 @@ Emitter::~Emitter(){}
 
 Emitter::Emitter(){}
 
-void Emitter::Update(Vector2 pos, bool particleStart)
+void Emitter::Update(Vector2 pos)
 {
-	particleStart;
 	pos;
 	for (auto itr = particleList.begin(); itr != particleList.end();) {
 		itr->Update();

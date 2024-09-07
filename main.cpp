@@ -89,8 +89,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Vector2 pos = { 700,300 };
 	
 
-	bool isStart = false;
-
+	int timer = 60;
 
 	Emit emitter2 =
 	{
@@ -144,24 +143,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 		
-		isStart = false;
 
-		if (keys[(DIK_SPACE)])
-		{
-			if (!isStart)
-			{
-				isStart = true;
-				
-			}
-		}
+		timer--;
 
-		if (isStart)
+
+		// フラグが立った時にemit->Emit(pos)を呼び出す
+		if (timer==0)
 		{
 			emit->Emit(pos);
+			timer = 60;
 		}
 
-		// 出てくるposと出すタイミングのフラグをアップデートに引数で入れる
-		emit->Update(pos, isStart);
+		// 出てくるposをアップデートに引数で入れる
+		emit->Update(pos);
 
 
 
@@ -256,8 +250,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
-
-		Novice::ScreenPrintf(0, 0, "Start", &isStart);
 
 		emit->Draw();
 		Novice::DrawEllipse((int)pos.x, (int)pos.y, 10, 10, 0.0f, WHITE, kFillModeSolid);

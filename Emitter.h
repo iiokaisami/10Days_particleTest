@@ -11,7 +11,7 @@ public:
 	~Emitter();
 	Emitter();
 
-	void Update(Vector2 pos,bool particleStart);
+	void Update(Vector2 pos);
 	void Draw();
 
 	void Emit(Vector2 pos);
@@ -20,9 +20,8 @@ private:
 
 	std::list<BrockParticle> particleList;
 
-	//int timer_ = 0; 
-	const int kParticleNum_ = 1; //
-	//int interval_ = 1; 
+
+	const int kParticleNum_ = 5; //
 	bool isEmit_ = 0;
 };
 
