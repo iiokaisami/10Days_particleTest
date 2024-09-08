@@ -9,19 +9,18 @@ class BrockEmitter{
 public:
 	
 	~BrockEmitter();
-	BrockEmitter();
+	void BrockEmitterInitialize();
 
-	void Update(Vector2 pos);
+	void Update();
 	void Draw();
 
-	void Emit(Vector2 pos);
+	void Emit(Vector2 pos,Vector2 brockSize);
 
 private:
 
 	std::list<BrockParticle> particleList;
 
-
-	const int kParticleNum_ = 5; //
-	bool isEmit_ = 0;
+	const int kParticleNum_ = 5;
+	Vector2 pos_ = {};
 };
 

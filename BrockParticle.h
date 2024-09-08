@@ -3,7 +3,8 @@
 #include "Vector2.h"
 
 class BrockParticle
-{public:
+{
+public:
 
 	~BrockParticle();
 	BrockParticle(Vector2 pos,float rad);

@@ -6,6 +6,7 @@
 
 #include "Vector2.h"
 #include "BrockEmitter.h"
+#include "MoveEmitter.h"
 
 const int number = 8;
 
@@ -85,11 +86,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 	BrockEmitter* brockEmit = new BrockEmitter();
-	
+	brockEmit->BrockEmitterInitialize();
+
 	Vector2 pos = { 700,300 };
 	
 
 	int timer = 60;
+
+
+	MoveEmitter* moveEmitter = new MoveEmitter();
+	moveEmitter->MoveEmitterInitialize();
 
 	Emit emitter2 =
 	{
@@ -98,26 +104,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{0,0},
 	};
 
-	Particle particle2;
-	for (int i = 0; i < number; i++) {
-		particle2.pos[i] = { 0,0 };
-		particle2.radius[i] = 5;
-
-		particle2.moveDir[i] = { 0,0 };
-		particle2.acc[i] = { 0,0.1f };
-		particle2.vel[i] = {};
-
-		particle2.isLive[i] = 0;
-		particle2.timer[i] = 0;
-
-		particle2.Lt[i] = { 0,0 };
-		particle2.Rt[i] = { 0,0 };
-		particle2.Lb[i] = { 0,0 };
-		particle2.Rb[i] = { 0,0 };
-
-		particle2.color[i] = 0xffffff90;
-		particle2.alpha[i] = 0x00000002;
-	}
+	Vector2 vel = {};
 
 	Vector2 Lt, Lb, Rt, Rb, rad = { 20.0f,20.0f };
 
@@ -150,98 +137,43 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// フラグが立った時にbrockEmit->Emit(pos)を呼び出す
 		if (timer==0)
 		{
-			brockEmit->Emit(pos);
+			brockEmit->Emit(pos, { 50.0f,50.0f });
 			timer = 60;
 		}
 
-		// 出てくるposをアップデートに引数で入れる
-		brockEmit->Update(pos);
+		// アップデート
+		brockEmit->Update();
 
 
 
 		if (keys[(DIK_W)])
 		{
-			emitter2.emit.y -= 3.0f;
-			for (int i = 0; i < number; i++)
-			{
-				particle2.moveDir[i].y = 1;
-			}
+			vel.y = -3.0f;
+			emitter2.emit.y += vel.y;
+			
 		}
 		if (keys[(DIK_S)])
 		{
-			emitter2.emit.y += 3.0f;
-			for (int i = 0; i < number; i++)
-			{
-				particle2.moveDir[i].y = -1;
-			}
+			vel.y = 3.0f;
+			emitter2.emit.y += vel.y;
+			
 		}
 		if (keys[(DIK_A)])
 		{
-			emitter2.emit.x -= 3.0f;
-			for (int i = 0; i < number; i++)
-			{
-				particle2.moveDir[i].x = 1;
-			}
+			vel.x = -3.0f;
+			emitter2.emit.x += vel.x;
+			
 		}
 		if (keys[(DIK_D)])
 		{
-			emitter2.emit.x += 3.0f;
-			for (int i = 0; i < number; i++)
-			{
-				particle2.moveDir[i].x = -1;
-			}
+			vel.x = 3.0f;
+			emitter2.emit.x += vel.x;
+			
 		}
+
+		moveEmitter->Update(emitter2.emit, vel, rad);
 
 		QuadVer(emitter2.emit, rad.x, rad.y, Lt, Rt, Lb, Rb);
-
-		for (int i = 0; i < number; i++)
-		{
-			if (!particle2.isLive[i])
-			{
-				particle2.pos[i] = { emitter2.emit.x,emitter2.emit.y };
-
-				if (particle2.moveDir[i].x != 0 or particle2.moveDir[i].y != 0)
-				{
-					particle2.moveDir[i].x = float(rand() % 500 - 250);
-				}
-				if (particle2.moveDir[i].y != 0 or particle2.moveDir[i].x != 0)
-				{
-					particle2.moveDir[i].y = float(rand() % 500 - 250);
-				}
-
-
-				normalize(particle2.moveDir[i]);
-
-				particle2.color[i] = 0xfffffff0;
-
-				particle2.isLive[i] = true;
-				particle2.timer[i] = 20;
-
-				break;
-			}
-
-			if (particle2.isLive[i])
-			{
-				if (particle2.timer[i] > 0)
-				{
-					particle2.timer[i]--;
-				}
-				else
-				{
-					particle2.moveDir[i] = {0,0};
-					particle2.isLive[i] = false;
-					particle2.timer[i] = 20;
-				}
-
-
-				// 動かす
-				particle2.pos[i].x += particle2.moveDir[i].x * 5;
-				particle2.pos[i].y += particle2.moveDir[i].y * 5;
-
-				// 中心から角4点求める
-				QuadVer(particle2.pos[i], particle2.radius[i], particle2.radius[i], particle2.Lt[i], particle2.Rt[i], particle2.Lb[i], particle2.Rb[i]);
-			}
-		}
 
 		///
 		/// ↑更新処理ここまで
@@ -255,15 +187,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		Novice::DrawEllipse((int)pos.x, (int)pos.y, 10, 10, 0.0f, WHITE, kFillModeSolid);
 
 		Novice::DrawQuad((int)Lt.x, (int)Lt.y, (int)Rt.x, (int)Rt.y, (int)Lb.x, (int)Lb.y, (int)Rb.x, (int)Rb.y, 0, 0, 80, 80, particlegh, WHITE);
-
-		for (int i = 0; i < number; i++)
-		{
-			Novice::DrawQuad((int)particle2.Lt[i].x, (int)particle2.Lt[i].y,
-				(int)particle2.Rt[i].x, (int)particle2.Rt[i].y,
-				(int)particle2.Lb[i].x, (int)particle2.Lb[i].y,
-				(int)particle2.Rb[i].x, (int)particle2.Rb[i].y,
-				0, 0, 80, 80, particlegh, particle2.color[i]);
-		}
+		moveEmitter->Draw();
 
 		///
 		/// ↑描画処理ここまで
@@ -280,6 +204,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 	delete brockEmit;
+	delete moveEmitter;
+
 
 	// ライブラリの終了
 	Novice::Finalize();

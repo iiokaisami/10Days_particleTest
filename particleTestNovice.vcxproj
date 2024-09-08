@@ -118,6 +118,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="C:\KamataEngine\Adapter\Novice.cpp" />
     <ClCompile Include="BrockEmitter.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MoveEmitter.cpp" />
     <ClCompile Include="MoveParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +151,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="C:\KamataEngine\DirectXGame\scene\GameScene.h" />
     <ClInclude Include="C:\KamataEngine\Adapter\Novice.h" />
     <ClInclude Include="BrockEmitter.h" />
+    <ClInclude Include="MoveEmitter.h" />
     <ClInclude Include="MoveParticle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
