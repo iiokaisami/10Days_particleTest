@@ -75,6 +75,8 @@ void QuadVer(Vector2 pos, float width, float height, Vector2& lt, Vector2& rt, V
 	rb = { pos.x + halfwidth, pos.y + halfheight };
 };
 
+//void Test()
+
 const char kWindowTitle[] = "LE2A_01_イイオカ_イサミ_タイトル";
 
 // Windowsアプリでのエントリーポイント(main関数)
@@ -107,6 +109,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Vector2 vel = {};
 
 	Vector2 Lt, Lb, Rt, Rb, rad = { 20.0f,20.0f };
+
+	Vector2 lt, lb, rt, rb, center = { 200.0f,200.0f }; 
+	Vector2 radius = { 30.0f,30.0f };
 
 	unsigned int currenttime = (unsigned int)time(nullptr);
 	srand(currenttime);
@@ -175,6 +180,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		QuadVer(emitter2.emit, rad.x, rad.y, Lt, Rt, Lb, Rb);
 
+
+
+
+		QuadVer(center, radius.x, radius.y, lt, rt, lb, rb);
+
+
+
 		///
 		/// ↑更新処理ここまで
 		///
@@ -182,6 +194,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
+
+		Novice::DrawQuad((int)lt.x, (int)lt.y, (int)rt.x, (int)rt.y, (int)lb.x, (int)lb.y, (int)rb.x, (int)rb.y, 0, 0, 80, 80, particlegh, WHITE);
+
 
 		brockEmit->Draw();
 		Novice::DrawEllipse((int)pos.x, (int)pos.y, 10, 10, 0.0f, WHITE, kFillModeSolid);
