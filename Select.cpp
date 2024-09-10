@@ -1,8 +1,6 @@
 #include "Select.h"
 
-Select::~Select()
-{
-}
+Select::~Select(){}
 
 void Select::Initialize()
 {
@@ -69,8 +67,9 @@ void Select::Initialize()
 	
 	buttonTime_ = kButtonTime;
 	starTime_ = kStarTime;
-	stageChangeInterval = kStageChangeTime;
-	stageChangeTime = 0;
+	stageChangeInterval_ = kStageChangeTime;
+	stageChangeTime_ = 0;
+	arrowTime_ = 0;
 
 	isStarDraw_ = true;
 
@@ -81,41 +80,67 @@ void Select::Initialize()
 	underPos_ = { 640,750 };
 	mainRad_= { 980.0f,420.0f };
 	subRad_ = { 588.0f,216.0f };
+
+	arrowStartPos_[0] = {640.0f,620.0f};
+	arrowStartPos_[1] = { 640.0f,100.0f };
+	arrowStopPos_[0] = { 640.0f,650.0f };
+	arrowStopPos_[1]= { 640.0f,70.0f };
 }
 
 void Select::Update()
 {
-	if (stageChangeInterval > 0)
+	if (stageChangeInterval_ > 0)
 	{
-		stageChangeInterval -= kTimeCount;
+		stageChangeInterval_ -= kTimeCount;
 	}
 
 	if (changeStage == 1 || changeStage == -1)
 	{
 		StageSelectUpdate();
 
-		if (stageChangeTime < 1)
+		if (stageChangeTime_ < 1)
 		{
-			stageChangeTime += kStageChangeCo;
+			stageChangeTime_ += kStageChangeCo;
 		}
 		else
 		{
-			stageChangeTime = 0;
+			stageChangeTime_ = 0;
 			changeStage = 0;
 		}
 	}
 
 	StarUpdate();
 
+	arrowTime_ += arrowTimeCo;
+	if (arrowTime_ > 1)
+	{
+		arrowTimeCo *= -1;
+	}
+	else if(arrowTime_ < 0)
+	{
+		arrowTimeCo *= -1;
+	}
+	
+
+	ArrowUpdate();
+
 	for (int i = 0; i < kStageNum; i++)
 	{
 		QuadVer(stage_[i].center, stage_[i].rad.x, stage_[i].rad.y, stage_[i].LT, stage_[i].RT, stage_[i].LB, stage_[i].RB);
+	}
+
+
+	arrow_[0].rad = { 50.0f,50.0f };
+
+	for (int i = 0; i < 2; i++)
+	{
+		QuadVer(arrow_[i].center, arrow_[i].rad.x, arrow_[i].rad.y, arrow_[i].LT, arrow_[i].RT, arrow_[i].LB, arrow_[i].RB);
 	}
 }
 
 void Select::Draw()
 {
-	Novice::ScreenPrintf(0, 0, "%d", stageNum_);
+	//Novice::ScreenPrintf(0, 0, "%d", stageNum_);
 	Novice::DrawQuad((int)bg_.LT.x, (int)bg_.LT.y,
 		(int)bg_.RT.x, (int)bg_.RT.y,
 		(int)bg_.LB.x, (int)bg_.LB.y,
@@ -200,10 +225,10 @@ void Select::Draw()
 
 void Select::PlusStageNum()
 {
-	if (stageChangeInterval == 0 && stageNum_ != kStageNum)
+	if (stageChangeInterval_ == 0 && stageNum_ != kStageNum)
 	{
 		stageNum_ += 1;
-		stageChangeInterval = kStageChangeTime;
+		stageChangeInterval_ = kStageChangeTime;
 		changeStage = 1;
 		/*if (stageNum_ == kStageNum + 1)
 		{
@@ -214,10 +239,10 @@ void Select::PlusStageNum()
 
 void Select::MinasStageNum()
 {
-	if (stageChangeInterval == 0 && stageNum_ != 1)
+	if (stageChangeInterval_ == 0 && stageNum_ != 1)
 	{
 		stageNum_ -= 1;
-		stageChangeInterval = kStageChangeTime;
+		stageChangeInterval_ = kStageChangeTime;
 		changeStage = -1;
 		/*if (stageNum_ == 0)
 		{
@@ -230,11 +255,11 @@ void Select::StageSelectUpdate()
 {
 	if (changeStage == 1)
 	{
-		stage_[stageNum_ - 2].center = Lerp(nowPos_, topPos_, stageChangeTime); // now
-		stage_[stageNum_ - 2].rad = Lerp(mainRad_, subRad_, stageChangeTime);
+		stage_[stageNum_ - 2].center = Lerp(nowPos_, topPos_, stageChangeTime_); // now
+		stage_[stageNum_ - 2].rad = Lerp(mainRad_, subRad_, stageChangeTime_);
 		
-		stage_[stageNum_ - 1].center = Lerp(underPos_, nowPos_, stageChangeTime); // under
-		stage_[stageNum_ - 1].rad = Lerp(subRad_, mainRad_, stageChangeTime);
+		stage_[stageNum_ - 1].center = Lerp(underPos_, nowPos_, stageChangeTime_); // under
+		stage_[stageNum_ - 1].rad = Lerp(subRad_, mainRad_, stageChangeTime_);
 
 		stage_[stageNum_].center = underPos_;
 		stage_[stageNum_].rad = subRad_;
@@ -245,11 +270,11 @@ void Select::StageSelectUpdate()
 		stage_[stageNum_ - 2].center = topPos_;
 		stage_[stageNum_ - 2].rad = subRad_;
 
-		stage_[stageNum_ - 1].center = Lerp(topPos_, nowPos_, stageChangeTime); // top
-		stage_[stageNum_ - 1].rad = Lerp(subRad_, mainRad_, stageChangeTime);
+		stage_[stageNum_ - 1].center = Lerp(topPos_, nowPos_, stageChangeTime_); // top
+		stage_[stageNum_ - 1].rad = Lerp(subRad_, mainRad_, stageChangeTime_);
 
-		stage_[stageNum_].center = Lerp(nowPos_, underPos_, stageChangeTime); // now
-		stage_[stageNum_].rad = Lerp(mainRad_, subRad_, stageChangeTime);
+		stage_[stageNum_].center = Lerp(nowPos_, underPos_, stageChangeTime_); // now
+		stage_[stageNum_].rad = Lerp(mainRad_, subRad_, stageChangeTime_);
 	}
 }
 
@@ -269,6 +294,12 @@ void Select::StarUpdate()
 		isStarDraw_ = true;
 		starTime_ = kStarTime;
 	}
+}
+
+void Select::ArrowUpdate()
+{
+	arrow_[0].center = Lerp(arrowStartPos_[0], arrowStopPos_[0], arrowTime_);
+	arrow_[1].center = Lerp(arrowStartPos_[1], arrowStopPos_[1], arrowTime_);
 }
 
 Vector2 Select::Lerp(const Vector2& v1, const Vector2& v2, float t)

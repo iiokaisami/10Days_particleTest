@@ -32,6 +32,8 @@ public:
 
 	void StarUpdate();
 
+	void ArrowUpdate();
+
 	Vector2 Lerp(const Vector2& v1, const Vector2& v2, float t);
 
 	void QuadVer(Vector2 pos, float width, float height, Vector2& lt, Vector2& rt, Vector2& lb, Vector2& rb);
@@ -51,16 +53,18 @@ private:
 	Quad button_{};
 
 	const int kTimeCount = 1;
-	const float kStageChangeCo = 0.1f;
 	const int kButtonTime = 300;
 	const int kStarTime = 120;
 	const int kStarEraseTime = 10;
 	const int kStageChangeTime = 20;
+	const float kStageChangeCo = 0.1f;
 
 	int buttonTime_ = 0;
 	int starTime_ = 0;
-	int stageChangeInterval = 0;
-	float stageChangeTime = 0;
+	int stageChangeInterval_ = 0;
+	float stageChangeTime_ = 0;
+	float arrowTimeCo = 0.02f;
+	float arrowTime_ = 0;
 
 	bool isStarDraw_ = true;
 
@@ -71,4 +75,7 @@ private:
 	Vector2 underPos_{};
 	Vector2 mainRad_{};
 	Vector2 subRad_{};
+
+	Vector2 arrowStartPos_[2];
+	Vector2 arrowStopPos_[2];
 };
