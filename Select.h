@@ -1,6 +1,9 @@
 #pragma once
 #include <Novice.h>
 #include "Vector2.h"
+#include <functional>
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 const int kStageNum = 5;
 
@@ -13,6 +16,14 @@ struct  Quad
 	Vector2 RT;
 	Vector2 RB;
 };
+
+template<class T> T EasingFunc(T start, T movement, std::function<T(T)> func, T t) { return start + func(t) * movement; }
+
+template<class T> T EaseOutElastic(T x) {
+	const T c4 = float((2 * M_PI) / 3);
+
+	return x == 0 ? 0 : x == 1 ? 1 : powf(2, -10 * x) * sinf((x * 10 - 0.75f) * c4) + 1;
+}
 
 class Select
 {
@@ -29,10 +40,9 @@ public:
 	void MinasStageNum();
 
 	void StageSelectUpdate();
-
 	void StarUpdate();
-
 	void ArrowUpdate();
+	void ButtonUpdate();
 
 	Vector2 Lerp(const Vector2& v1, const Vector2& v2, float t);
 
@@ -60,6 +70,8 @@ private:
 	const float kStageChangeCo = 0.1f;
 
 	int buttonTime_ = 0;
+	float poyonTime_ = 0;
+	float ButtonCo_ = 0.1f;
 	int starTime_ = 0;
 	int stageChangeInterval_ = 0;
 	float stageChangeTime_ = 0;
@@ -78,4 +90,9 @@ private:
 
 	Vector2 arrowStartPos_[2];
 	Vector2 arrowStopPos_[2];
+
+	Vector2 buttonStartRad_{};
+	Vector2 buttonStopRad_{};
+
+	bool isPoyon_ = false;
 };

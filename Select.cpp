@@ -85,6 +85,11 @@ void Select::Initialize()
 	arrowStartPos_[1] = { 640.0f,100.0f };
 	arrowStopPos_[0] = { 640.0f,650.0f };
 	arrowStopPos_[1]= { 640.0f,70.0f };
+
+	buttonStartRad_= { 50.0f,50.0f };
+	buttonStopRad_ = { 80.0f,80.0f };
+
+	isPoyon_ = false;
 }
 
 void Select::Update()
@@ -124,6 +129,27 @@ void Select::Update()
 
 	ArrowUpdate();
 
+	if (buttonTime_ > 0)
+	{
+		buttonTime_ -= kTimeCount;
+	}
+	else
+	{
+		isPoyon_ = true;
+	}
+
+	if (isPoyon_)
+	{
+		poyonTime_ += ButtonCo_;
+
+		if (poyonTime_ == 1.0f)
+		{
+			ButtonCo_ *= -1;
+		}
+
+		ButtonUpdate();
+	}
+
 	for (int i = 0; i < kStageNum; i++)
 	{
 		QuadVer(stage_[i].center, stage_[i].rad.x, stage_[i].rad.y, stage_[i].LT, stage_[i].RT, stage_[i].LB, stage_[i].RB);
@@ -136,11 +162,14 @@ void Select::Update()
 	{
 		QuadVer(arrow_[i].center, arrow_[i].rad.x, arrow_[i].rad.y, arrow_[i].LT, arrow_[i].RT, arrow_[i].LB, arrow_[i].RB);
 	}
+
+	QuadVer(button_.center, button_.rad.x, button_.rad.y, button_.LT, button_.RT, button_.LB, button_.RB);
+
 }
 
 void Select::Draw()
 {
-	//Novice::ScreenPrintf(0, 0, "%d", stageNum_);
+	Novice::ScreenPrintf(0, 0, "%d", buttonTime_);
 	Novice::DrawQuad((int)bg_.LT.x, (int)bg_.LT.y,
 		(int)bg_.RT.x, (int)bg_.RT.y,
 		(int)bg_.LB.x, (int)bg_.LB.y,
@@ -300,6 +329,21 @@ void Select::ArrowUpdate()
 {
 	arrow_[0].center = Lerp(arrowStartPos_[0], arrowStopPos_[0], arrowTime_);
 	arrow_[1].center = Lerp(arrowStartPos_[1], arrowStopPos_[1], arrowTime_);
+}
+
+void Select::ButtonUpdate()
+{
+	/*Vector2 difference;
+	difference = { buttonStopRad_.x - buttonStartRad_.x,buttonStopRad_.y - buttonStartRad_.y };
+
+	button_.rad = buttonStartRad_ + EaseOutElastic(poyonTime_) * difference;*/
+	button_.rad = Lerp(buttonStartRad_, buttonStopRad_, EaseOutElastic(poyonTime_));
+
+	if (poyonTime_==-0.1f)
+	{
+		isPoyon_ = false;
+		buttonTime_ = kButtonTime;
+	}
 }
 
 Vector2 Select::Lerp(const Vector2& v1, const Vector2& v2, float t)
