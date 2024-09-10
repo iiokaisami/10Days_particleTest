@@ -209,18 +209,26 @@ void Select::StageSeleceUpdate()
 {
 	if (changeStage == 1)
 	{
-		/*stage_[stageNum_ - 2].center = Lerp(nowPos_, topPos_, stageChangeTime);
-		stage_[stageNum_ - 2].rad = Lerp(subRad_, mainRad_, stageChangeTime);*/
 
-		stage_[stageNum_ - 1].center = Lerp(nowPos_, underPos_, stageChangeTime);
+		stage_[stageNum_ - 2].center = Lerp(nowPos_, topPos_, stageChangeTime);
+		stage_[stageNum_ - 2].rad = Lerp(mainRad_, subRad_, stageChangeTime);
+
+		stage_[stageNum_ - 1].center = Lerp(underPos_, nowPos_, stageChangeTime);
 		stage_[stageNum_ - 1].rad = Lerp(subRad_, mainRad_, stageChangeTime);
-		QuadVer(stage_[stageNum_ - 1].center, stage_[stageNum_ - 1].rad.x, stage_[stageNum_ - 1].rad.y, stage_[stageNum_ - 1].LT, stage_[stageNum_ - 1].RT, stage_[stageNum_ - 1].LB, stage_[stageNum_ - 1].RB);
+
+		for (int i = 0; i < kStageNum; i++)
+		{
+			QuadVer(stage_[i].center, stage_[i].rad.x, stage_[i].rad.y, stage_[i].LT, stage_[i].RT, stage_[i].LB, stage_[i].RB);
+		}
 	}
 
 	if (changeStage == -1)
 	{
-		stage_[stageNum_-1].center = Lerp(nowPos_, topPos_, stageChangeTime);
-		stage_[stageNum_ - 1].rad = Lerp(subRad_, mainRad_, stageChangeTime);
+		stage_[stageNum_ - 2].center = Lerp(topPos_, nowPos_, stageChangeTime);
+		stage_[stageNum_ - 2].rad = Lerp(subRad_, mainRad_, stageChangeTime);
+
+		stage_[stageNum_ - 1].center = Lerp(nowPos_, underPos_, stageChangeTime);
+		stage_[stageNum_ - 1].rad = Lerp(mainRad_, subRad_, stageChangeTime);
 	}
 }
 
@@ -244,7 +252,7 @@ void Select::StarUpdate()
 
 Vector2 Select::Lerp(const Vector2& v1, const Vector2& v2, float t)
 {
-	Vector2 v = { v2.x - v1.x,v2.y - v2.y };
+	Vector2 v = { v2.x - v1.x,v2.y - v1.y };
 
 	v = { v.x * t,v.y * t };
 
