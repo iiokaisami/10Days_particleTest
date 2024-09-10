@@ -36,8 +36,8 @@ void Select::Initialize()
 	stage_[1].center = { 640.0f,750.0f };
 	stage_[1].rad = { 588.0f,216.0f };
 	QuadVer(stage_[1].center, stage_[1].rad.x, stage_[1].rad.y, stage_[1].LT, stage_[1].RT, stage_[1].LB, stage_[1].RB);
-	///////////////////////////////////
-	stage_[2].center = { 640.0f,360.0f };
+
+	/*stage_[2].center = { 640.0f,360.0f };
 	stage_[2].rad = { 980.0f,420.0f };
 	QuadVer(stage_[2].center, stage_[2].rad.x, stage_[2].rad.y, stage_[2].LT, stage_[2].RT, stage_[2].LB, stage_[2].RB);
 
@@ -47,7 +47,7 @@ void Select::Initialize()
 
 	stage_[4].center = { 640.0f,-30.0f };
 	stage_[4].rad = { 588.0f,216.0f };
-	QuadVer(stage_[4].center, stage_[4].rad.x, stage_[4].rad.y, stage_[4].LT, stage_[4].RT, stage_[4].LB, stage_[4].RB);
+	QuadVer(stage_[4].center, stage_[4].rad.x, stage_[4].rad.y, stage_[4].LT, stage_[4].RT, stage_[4].LB, stage_[4].RB);*/
 	
 
 
@@ -92,7 +92,7 @@ void Select::Update()
 
 	if (changeStage == 1 || changeStage == -1)
 	{
-		StageSeleceUpdate();
+		StageSelectUpdate();
 
 		if (stageChangeTime < 1)
 		{
@@ -139,34 +139,55 @@ void Select::Draw()
 		(int)stage_[0].LB.x, (int)stage_[0].LB.y,
 		(int)stage_[0].RB.x, (int)stage_[0].RB.y,
 		0, 0, (int)stage_[0].rad.x, (int)stage_[0].rad.y,
-		stageTexture_[0], 0x4169e1ff);
+		stageTexture_[0], 0x000000ff);
 
 	Novice::DrawQuad((int)stage_[1].LT.x, (int)stage_[1].LT.y,
 		(int)stage_[1].RT.x, (int)stage_[1].RT.y,
 		(int)stage_[1].LB.x, (int)stage_[1].LB.y,
 		(int)stage_[1].RB.x, (int)stage_[1].RB.y,
 		0, 0, (int)stage_[1].rad.x, (int)stage_[1].rad.y,
-		stageTexture_[1], 0xff4500ff);
+		stageTexture_[1], 0xa9a9a9ff);
 
+	Novice::DrawQuad((int)stage_[2].LT.x, (int)stage_[2].LT.y,
+		(int)stage_[2].RT.x, (int)stage_[2].RT.y,
+		(int)stage_[2].LB.x, (int)stage_[2].LB.y,
+		(int)stage_[2].RB.x, (int)stage_[2].RB.y,
+		0, 0, (int)stage_[2].rad.x, (int)stage_[2].rad.y,
+		stageTexture_[2], 0xd3d3d3ff);
 
+	Novice::DrawQuad((int)stage_[3].LT.x, (int)stage_[3].LT.y,
+		(int)stage_[3].RT.x, (int)stage_[3].RT.y,
+		(int)stage_[3].LB.x, (int)stage_[3].LB.y,
+		(int)stage_[3].RB.x, (int)stage_[3].RB.y,
+		0, 0, (int)stage_[3].rad.x, (int)stage_[3].rad.y,
+		stageTexture_[3], 0xf5f5f5ff);
 
-	/*Novice::DrawQuad((int)stage_[4].LT.x, (int)stage_[4].LT.y,
+	Novice::DrawQuad((int)stage_[4].LT.x, (int)stage_[4].LT.y,
 		(int)stage_[4].RT.x, (int)stage_[4].RT.y,
 		(int)stage_[4].LB.x, (int)stage_[4].LB.y,
 		(int)stage_[4].RB.x, (int)stage_[4].RB.y,
 		0, 0, (int)stage_[4].rad.x, (int)stage_[4].rad.y,
-		stageTexture_[4], 0x4169e1ff);*/
+		stageTexture_[4], 0xfffafaff);
 
 
 
-	for (int i=0; i < 2; i++)
+	if (stageNum_ != 5)
 	{
-		Novice::DrawQuad((int)arrow_[i].LT.x, (int)arrow_[i].LT.y,
-			(int)arrow_[i].RT.x, (int)arrow_[i].RT.y,
-			(int)arrow_[i].LB.x, (int)arrow_[i].LB.y,
-			(int)arrow_[i].RB.x, (int)arrow_[i].RB.y,
-			0, 0, (int)arrow_[i].rad.x, (int)arrow_[i].rad.y,
-			arrowTexture_[i], 0xb0c4deff);
+		Novice::DrawQuad((int)arrow_[0].LT.x, (int)arrow_[0].LT.y,
+			(int)arrow_[0].RT.x, (int)arrow_[0].RT.y,
+			(int)arrow_[0].LB.x, (int)arrow_[0].LB.y,
+			(int)arrow_[0].RB.x, (int)arrow_[0].RB.y,
+			0, 0, (int)arrow_[0].rad.x, (int)arrow_[0].rad.y,
+			arrowTexture_[0], 0xb0c4deff);
+	}
+	if (stageNum_ != 1)
+	{
+		Novice::DrawQuad((int)arrow_[1].LT.x, (int)arrow_[1].LT.y,
+			(int)arrow_[1].RT.x, (int)arrow_[1].RT.y,
+			(int)arrow_[1].LB.x, (int)arrow_[1].LB.y,
+			(int)arrow_[1].RB.x, (int)arrow_[1].RB.y,
+			0, 0, (int)arrow_[1].rad.x, (int)arrow_[1].rad.y,
+			arrowTexture_[1], 0xb0c4deff);
 	}
 
 	Novice::DrawQuad((int)button_.LT.x, (int)button_.LT.y,
@@ -179,56 +200,56 @@ void Select::Draw()
 
 void Select::PlusStageNum()
 {
-	if (stageChangeInterval == 0)
+	if (stageChangeInterval == 0 && stageNum_ != kStageNum)
 	{
 		stageNum_ += 1;
 		stageChangeInterval = kStageChangeTime;
 		changeStage = 1;
-		if (stageNum_ == kStageNum + 1)
+		/*if (stageNum_ == kStageNum + 1)
 		{
 			stageNum_ = 1;
-		}
+		}*/
 	}
 }
 
 void Select::MinasStageNum()
 {
-	if (stageChangeInterval == 0)
+	if (stageChangeInterval == 0 && stageNum_ != 1)
 	{
 		stageNum_ -= 1;
 		stageChangeInterval = kStageChangeTime;
 		changeStage = -1;
-		if (stageNum_ == 0)
+		/*if (stageNum_ == 0)
 		{
 			stageNum_ = kStageNum;
-		}
+		}*/
 	}
 }
 
-void Select::StageSeleceUpdate()
+void Select::StageSelectUpdate()
 {
 	if (changeStage == 1)
 	{
-
-		stage_[stageNum_ - 2].center = Lerp(nowPos_, topPos_, stageChangeTime);
+		stage_[stageNum_ - 2].center = Lerp(nowPos_, topPos_, stageChangeTime); // now
 		stage_[stageNum_ - 2].rad = Lerp(mainRad_, subRad_, stageChangeTime);
-
-		stage_[stageNum_ - 1].center = Lerp(underPos_, nowPos_, stageChangeTime);
+		
+		stage_[stageNum_ - 1].center = Lerp(underPos_, nowPos_, stageChangeTime); // under
 		stage_[stageNum_ - 1].rad = Lerp(subRad_, mainRad_, stageChangeTime);
 
-		for (int i = 0; i < kStageNum; i++)
-		{
-			QuadVer(stage_[i].center, stage_[i].rad.x, stage_[i].rad.y, stage_[i].LT, stage_[i].RT, stage_[i].LB, stage_[i].RB);
-		}
+		stage_[stageNum_].center = underPos_;
+		stage_[stageNum_].rad = subRad_;
 	}
 
 	if (changeStage == -1)
 	{
-		stage_[stageNum_ - 2].center = Lerp(topPos_, nowPos_, stageChangeTime);
-		stage_[stageNum_ - 2].rad = Lerp(subRad_, mainRad_, stageChangeTime);
+		stage_[stageNum_ - 2].center = topPos_;
+		stage_[stageNum_ - 2].rad = subRad_;
 
-		stage_[stageNum_ - 1].center = Lerp(nowPos_, underPos_, stageChangeTime);
-		stage_[stageNum_ - 1].rad = Lerp(mainRad_, subRad_, stageChangeTime);
+		stage_[stageNum_ - 1].center = Lerp(topPos_, nowPos_, stageChangeTime); // top
+		stage_[stageNum_ - 1].rad = Lerp(subRad_, mainRad_, stageChangeTime);
+
+		stage_[stageNum_].center = Lerp(nowPos_, underPos_, stageChangeTime); // now
+		stage_[stageNum_].rad = Lerp(mainRad_, subRad_, stageChangeTime);
 	}
 }
 

@@ -28,7 +28,7 @@ public:
 	void PlusStageNum();
 	void MinasStageNum();
 
-	void StageSeleceUpdate();
+	void StageSelectUpdate();
 
 	void StarUpdate();
 
