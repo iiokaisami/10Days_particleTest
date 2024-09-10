@@ -50,6 +50,9 @@
     <ClCompile Include="MoveEmitter.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
+    <ClCompile Include="Select.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\KamataEngine\DirectXGame\audio\Audio.h">
@@ -127,5 +130,6 @@
     <ClInclude Include="BrockParticle.h" />
     <ClInclude Include="MoveParticle.h" />
     <ClInclude Include="MoveEmitter.h" />
+    <ClInclude Include="Select.h" />
   </ItemGroup>
 </Project>

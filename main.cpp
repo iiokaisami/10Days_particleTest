@@ -7,6 +7,7 @@
 #include "Vector2.h"
 #include "BrockEmitter.h"
 #include "MoveEmitter.h"
+#include "Select.h"
 
 const int number = 8;
 
@@ -86,37 +87,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Novice::Initialize(kWindowTitle, 1280, 720);
 	
 
+	Select* select = new Select();
+	select->Initialize();
 
-	BrockEmitter* brockEmit = new BrockEmitter();
-	brockEmit->BrockEmitterInitialize();
-
-	Vector2 pos = { 700,300 };
-	
-
-	int timer = 60;
-
-
-	MoveEmitter* moveEmitter = new MoveEmitter();
-	moveEmitter->MoveEmitterInitialize();
-
-	Emit emitter2 =
-	{
-		0,
-		0,
-		{0,0},
-	};
-
-	Vector2 vel = {};
-
-	Vector2 Lt, Lb, Rt, Rb, rad = { 20.0f,20.0f };
-
-	Vector2 lt, lb, rt, rb, center = { 200.0f,200.0f }; 
-	Vector2 radius = { 30.0f,30.0f };
-
-	unsigned int currenttime = (unsigned int)time(nullptr);
-	srand(currenttime);
-
-	int particlegh = Novice::LoadTexture("./NoviceResources/kamata.ico");
 
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
@@ -136,56 +109,26 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		
 
-		timer--;
-
-
-		// フラグが立った時にbrockEmit->Emit(pos)を呼び出す
-		if (timer==0)
-		{
-			brockEmit->Emit(pos, { 50.0f,50.0f });
-			timer = 60;
-		}
-
-		// アップデート
-		brockEmit->Update();
-
-
 
 		if (keys[(DIK_W)])
 		{
-			vel.y = -3.0f;
-			emitter2.emit.y += vel.y;
-			
+			select->MinasStageNum();
 		}
 		if (keys[(DIK_S)])
 		{
-			vel.y = 3.0f;
-			emitter2.emit.y += vel.y;
+			select->PlusStageNum();
 			
 		}
-		if (keys[(DIK_A)])
+
+
+		if (keys[(DIK_SPACE)])
 		{
-			vel.x = -3.0f;
-			emitter2.emit.x += vel.x;
-			
-		}
-		if (keys[(DIK_D)])
-		{
-			vel.x = 3.0f;
-			emitter2.emit.x += vel.x;
-			
+			// スペース押したらSutageNum（ステージ番号）取得
+			select->GetStageNum();
 		}
 
-		moveEmitter->Update(emitter2.emit, vel, rad);
-
-		QuadVer(emitter2.emit, rad.x, rad.y, Lt, Rt, Lb, Rb);
-
-
-
-
-		QuadVer(center, radius.x, radius.y, lt, rt, lb, rb);
-
-
+		
+		select->Update();
 
 		///
 		/// ↑更新処理ここまで
@@ -195,14 +138,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
-		Novice::DrawQuad((int)lt.x, (int)lt.y, (int)rt.x, (int)rt.y, (int)lb.x, (int)lb.y, (int)rb.x, (int)rb.y, 0, 0, 80, 80, particlegh, WHITE);
+		select->Draw();
 
-
-		brockEmit->Draw();
-		Novice::DrawEllipse((int)pos.x, (int)pos.y, 10, 10, 0.0f, WHITE, kFillModeSolid);
-
-		Novice::DrawQuad((int)Lt.x, (int)Lt.y, (int)Rt.x, (int)Rt.y, (int)Lb.x, (int)Lb.y, (int)Rb.x, (int)Rb.y, 0, 0, 80, 80, particlegh, WHITE);
-		moveEmitter->Draw();
 
 		///
 		/// ↑描画処理ここまで
@@ -217,9 +154,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 	}
 
-
-	delete brockEmit;
-	delete moveEmitter;
+	delete select;
 
 
 	// ライブラリの終了
