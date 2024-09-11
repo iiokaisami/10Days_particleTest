@@ -239,7 +239,7 @@ void Result::ScoreUpdate()
 	}
 	else if (evaluationPoint_ == 2)
 	{
-		evaluationTex_ = evaluationTexture_[2]
+		evaluationTex_ = evaluationTexture_[2];
 	}
 
 	QuadVer(evaluation_.center, evaluation_.rad.x, evaluation_.rad.y, evaluation_.LT, evaluation_.RT, evaluation_.LB, evaluation_.RB);
