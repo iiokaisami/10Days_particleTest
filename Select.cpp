@@ -141,7 +141,7 @@ void Select::Update()
 
 	if (isPoyon_)
 	{
-		poyonTime_ += ButtonCo_;
+		poyonTime_ += kButtonCo_;
 
 
 		ButtonUpdate();
@@ -166,8 +166,6 @@ void Select::Update()
 
 void Select::Draw()
 {
-	Novice::ScreenPrintf(0, 0, "%d", buttonTime_);
-	Novice::ScreenPrintf(0, 20, "%.2f", poyonTime_);
 	Novice::DrawQuad((int)bg_.LT.x, (int)bg_.LT.y,
 		(int)bg_.RT.x, (int)bg_.RT.y,
 		(int)bg_.LB.x, (int)bg_.LB.y,
@@ -340,7 +338,7 @@ void Select::ButtonUpdate()
 		button_.rad = Lerp(buttonStopRad_, buttonStartRad_, EaseOutElastic(poyonTime_));
 	}
 
-	if (poyonTime_ >= 1.0f && !isPoyonChange_)
+	if (poyonTime_ >= 1.0f)
 	{
 		if (!isPoyonChange_)
 		{

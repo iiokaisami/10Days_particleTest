@@ -76,7 +76,6 @@ void QuadVer(Vector2 pos, float width, float height, Vector2& lt, Vector2& rt, V
 	rb = { pos.x + halfwidth, pos.y + halfheight };
 };
 
-//void Test()
 
 const char kWindowTitle[] = "LE2A_01_イイオカ_イサミ_タイトル";
 
@@ -90,6 +89,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Select* select = new Select();
 	select->Initialize();
 
+	int stage = 0;
 
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
@@ -124,7 +124,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		if (keys[(DIK_SPACE)])
 		{
 			// スペース押したらSutageNum（ステージ番号）取得
-			select->GetStageNum();
+			stage = select->GetStageNum();
 		}
 
 		
@@ -138,6 +138,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
+		Novice::ScreenPrintf(0, 0, "%ds", stage);
 		select->Draw();
 
 

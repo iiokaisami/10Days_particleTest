@@ -68,10 +68,10 @@ private:
 	const int kStarEraseTime = 10;
 	const int kStageChangeTime = 20;
 	const float kStageChangeCo = 0.1f;
+	const float kButtonCo_ = 0.1f;
 
 	int buttonTime_ = 0;
 	float poyonTime_ = 0;
-	float ButtonCo_ = 0.1f;
 	int starTime_ = 0;
 	int stageChangeInterval_ = 0;
 	float stageChangeTime_ = 0;
