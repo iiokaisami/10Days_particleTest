@@ -95,4 +95,5 @@ private:
 	Vector2 buttonStopRad_{};
 
 	bool isPoyon_ = false;
+	bool isPoyonChange_ = false;
 };

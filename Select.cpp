@@ -87,9 +87,10 @@ void Select::Initialize()
 	arrowStopPos_[1]= { 640.0f,70.0f };
 
 	buttonStartRad_= { 50.0f,50.0f };
-	buttonStopRad_ = { 80.0f,80.0f };
+	buttonStopRad_ = { 60.0f,60.0f };
 
 	isPoyon_ = false;
+	isPoyonChange_ = false;
 }
 
 void Select::Update()
@@ -142,10 +143,6 @@ void Select::Update()
 	{
 		poyonTime_ += ButtonCo_;
 
-		if (poyonTime_ == 1.0f)
-		{
-			ButtonCo_ *= -1;
-		}
 
 		ButtonUpdate();
 	}
@@ -170,6 +167,7 @@ void Select::Update()
 void Select::Draw()
 {
 	Novice::ScreenPrintf(0, 0, "%d", buttonTime_);
+	Novice::ScreenPrintf(0, 20, "%.2f", poyonTime_);
 	Novice::DrawQuad((int)bg_.LT.x, (int)bg_.LT.y,
 		(int)bg_.RT.x, (int)bg_.RT.y,
 		(int)bg_.LB.x, (int)bg_.LB.y,
@@ -333,16 +331,29 @@ void Select::ArrowUpdate()
 
 void Select::ButtonUpdate()
 {
-	/*Vector2 difference;
-	difference = { buttonStopRad_.x - buttonStartRad_.x,buttonStopRad_.y - buttonStartRad_.y };
-
-	button_.rad = buttonStartRad_ + EaseOutElastic(poyonTime_) * difference;*/
-	button_.rad = Lerp(buttonStartRad_, buttonStopRad_, EaseOutElastic(poyonTime_));
-
-	if (poyonTime_==-0.1f)
+	if (!isPoyonChange_)
 	{
-		isPoyon_ = false;
-		buttonTime_ = kButtonTime;
+		button_.rad = Lerp(buttonStartRad_, buttonStopRad_, EaseOutElastic(poyonTime_));
+	}
+	else if (isPoyonChange_)
+	{
+		button_.rad = Lerp(buttonStopRad_, buttonStartRad_, EaseOutElastic(poyonTime_));
+	}
+
+	if (poyonTime_ >= 1.0f && !isPoyonChange_)
+	{
+		if (!isPoyonChange_)
+		{
+			poyonTime_ = 0;
+			isPoyonChange_ = true;
+		}
+		else
+		{
+			isPoyon_ = false;
+			isPoyonChange_ = false;
+			poyonTime_ = 0;
+			buttonTime_ = kButtonTime;
+		}
 	}
 }
 
