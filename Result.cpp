@@ -28,12 +28,12 @@ void Result::Initialize()
 	star_.rad = { 64.0f,64.0f };
 	QuadVer(star_.center, star_.rad.x, star_.rad.y, star_.LT, star_.RT, star_.LB, star_.RB);
 
-	ui_[0].center = { 900.0f,550.0f };
-	ui_[0].rad = { 500.0f,150.0f };
+	ui_[0].center = { 1000.0f,500.0f };
+	ui_[0].rad = { 400.0f,120.0f };
 	QuadVer(ui_[0].center, ui_[0].rad.x, ui_[0].rad.y, ui_[0].LT, ui_[0].RT, ui_[0].LB, ui_[0].RB);
 
-	ui_[1].center = { 900.0f,650.0f };
-	ui_[1].rad = { 500.0f,150.0f };
+	ui_[1].center = { 1000.0f,600.0f };
+	ui_[1].rad = { 400.0f,120.0f };
 	QuadVer(ui_[1].center, ui_[1].rad.x, ui_[1].rad.y, ui_[1].LT, ui_[1].RT, ui_[1].LB, ui_[1].RB);
 
 	button_.center = { ui_[0].RT};
@@ -58,7 +58,7 @@ void Result::Initialize()
 	human_.rad = { 640.0f,360.0f };
 	QuadVer(human_.center, human_.rad.x, human_.rad.y, human_.LT, human_.RT, human_.LB, human_.RB);
 
-	evaluation_.center = { 640.0f,360.0f };
+	evaluation_.center = { 640.0f,300.0f };
 	evaluation_.rad = { 500.0f,150.0f };
 	QuadVer(evaluation_.center, evaluation_.rad.x, evaluation_.rad.y, evaluation_.LT, evaluation_.RT, evaluation_.LB, evaluation_.RB);
 
@@ -88,9 +88,12 @@ void Result::Initialize()
 	HumanFloatStart_ = { 320.0f,640.0f };
 	HumanFloatStop_ = { 320.0f,590.0f };
 
-	evaluationTextureRad_ = { 0.0f,evaluation_.rad.y };
-	evaluationStartRad_ = { 0.0f,150.0f };
-	evaluationStopRad_ = { 500.0f,150.0f };
+	evaluationStartTPos_ = evaluation_.LT;
+	evaluationStopTPos_ = { 800.0f,evaluation_.LT.y };
+	evaluationStartBPos_ = evaluation_.LB;
+	evaluationStopBPos_ = { 800.0f,evaluation_.LB.y };
+
+	evaluationPoint_ = 0;
 }
 
 void Result::Update()
@@ -133,7 +136,7 @@ void Result::Draw()
 			(int)ui_[i].RT.x, (int)ui_[i].RT.y,
 			(int)ui_[i].LB.x, (int)ui_[i].LB.y,
 			(int)ui_[i].RB.x, (int)ui_[i].RB.y,
-			0, 0, (int)ui_[i].rad.x, (int)ui_[i].rad.y,
+			0, 0, (int)uiTextureRad_[i].x, (int)uiTextureRad_[i].y,
 			nextUITex_[i], WHITE);
 	}
 
@@ -175,14 +178,14 @@ void Result::Draw()
 			humanTexture_, WHITE);
 	}
 
-	if (isScoreDrawComp_)
+	if (evaluationTime_==0)
 	{
 		Novice::DrawQuad((int)evaluation_.LT.x, (int)evaluation_.LT.y,
 			(int)evaluation_.RT.x, (int)evaluation_.RT.y,
 			(int)evaluation_.LB.x, (int)evaluation_.LB.y,
 			(int)evaluation_.RB.x, (int)evaluation_.RB.y,
-			0, 0, (int)evaluationTextureRad_.x, (int)evaluationTextureRad_.y,
-			evaluationTexture_[1], WHITE);
+			0, 0, (int)evaluation_.rad.x, (int)evaluation_.rad.y,
+			evaluationTex_, WHITE);
 	}
 }
 
@@ -217,12 +220,26 @@ void Result::ScoreUpdate()
 	{
 		evaluationEasTime_ += kEvaluationCount;
 
-		evaluationTextureRad_ = Lerp(evaluationStopRad_, evaluationStartRad_, evaluationEasTime_);
+		evaluation_.RT = Lerp(evaluationStartTPos_, evaluationStopTPos_, evaluationEasTime_);
+		evaluation_.RB = Lerp(evaluationStartBPos_, evaluationStopBPos_, evaluationEasTime_);
 	}
 	if (evaluationEasTime_ >= 1.0f)
 	{
 		//evaluationEasTime_ = 0;
 		isPopHuman_ = true;
+	}
+
+	if (evaluationPoint_ == 0) 
+	{
+		evaluationTex_ = evaluationTexture_[0];
+	}
+	else if (evaluationPoint_ == 1)
+	{
+		evaluationTex_ = evaluationTexture_[1];
+	}
+	else if (evaluationPoint_ == 2)
+	{
+		evaluationTex_ = evaluationTexture_[2]
 	}
 
 	QuadVer(evaluation_.center, evaluation_.rad.x, evaluation_.rad.y, evaluation_.LT, evaluation_.RT, evaluation_.LB, evaluation_.RB);
@@ -233,23 +250,34 @@ void Result::UIUpdate()
 	if (changeNext_ == 1)
 	{
 		nextUITex_[0] = forUITexture_[0];
-		ui_[0].rad = { 500.0f,150.0f };
+		ui_[0].rad = { 400.0f,120.0f };
 
 		nextUITex_[1] = uiTexture_[1];
-		ui_[1].rad = { 345.0f,112.0f };
+		ui_[1].rad = { 280.0f,92.0f };
+
+		uiTextureRad_[0] = { 500.0f,150.0f };
+		uiTextureRad_[1] = { 345.0f,112.0f };
+
+		button_.center = { ui_[0].RT };
 	}
 
 	if (changeNext_ == 2)
 	{
 		nextUITex_[0] = uiTexture_[0];
-		ui_[0].rad = { 345.0f,112.0f };
+		ui_[0].rad = { 280.0f,92.0f };
 
 		nextUITex_[1] = forUITexture_[1];
-		ui_[1].rad = { 500.0f,150.0f };
+		ui_[1].rad = { 400.0f,120.0f };
+
+		uiTextureRad_[0] = { 345.0f,112.0f };
+		uiTextureRad_[1] = { 500.0f, 150.0f };
+
+		button_.center = { ui_[1].RT };
 	}
 
 	QuadVer(ui_[0].center, ui_[0].rad.x, ui_[0].rad.y, ui_[0].LT, ui_[0].RT, ui_[0].LB, ui_[0].RB);
 	QuadVer(ui_[1].center, ui_[1].rad.x, ui_[1].rad.y, ui_[1].LT, ui_[1].RT, ui_[1].LB, ui_[1].RB);
+	QuadVer(button_.center, button_.rad.x, button_.rad.y, button_.LT, button_.RT, button_.LB, button_.RB);
 	///////////////////////////////////////////////
 	buttonTime_ += buttonCount_;
 	if (buttonTime_ > 1)

@@ -153,11 +153,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 		else if (scene == 1)
 		{
-			if (keys[(DIK_W)])
+			if (keys[(DIK_W)] && !preKeys[(DIK_W)])
 			{
 				result->ChangeNext();
 			}
-			if (keys[(DIK_S)])
+			if (keys[(DIK_S)] && !preKeys[(DIK_S)])
 			{
 				result->ChangeNext();
 			}
@@ -173,7 +173,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
-		//Novice::ScreenPrintf(0, 0, "%d", stage);
+		Novice::ScreenPrintf(0, 0, "%d", stage);
 		if (scene == 0)
 		{
 			select->Draw();

@@ -59,6 +59,8 @@ private:
 	Quad human_{};
 	Quad evaluation_{};
 
+	Vector2 uiTextureRad_[2];
+
 	const int kTimeCount = 1;
 	const int kStarTime = 120;
 	const int kStarEraseTime = 10;
@@ -94,7 +96,8 @@ private:
 	Vector2 HumanFloatStart_{};
 	Vector2 HumanFloatStop_{};
 
-	Vector2 evaluationTextureRad_{};
-	Vector2 evaluationStartRad_{};
-	Vector2 evaluationStopRad_{};
+	Vector2 evaluationStartTPos_{};
+	Vector2 evaluationStopTPos_{};
+	Vector2 evaluationStartBPos_{};
+	Vector2 evaluationStopBPos_{};
 };
