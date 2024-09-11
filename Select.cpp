@@ -5,7 +5,7 @@ Select::~Select(){}
 void Select::Initialize()
 {
 	bgTexture_ = Novice::LoadTexture("./Resources/white1x1.png"); // 0x191970ff
-	starTexture_ = Novice::LoadTexture("./Resources/white1x1.png"); // 0xffd700ff
+	starTexture_ = Novice::LoadTexture("./Resources/StageSelect/flowerYellow.png"); // 0xffd700ff
 
 	stageTexture_[0] = Novice::LoadTexture("./Resources/white1x1.png"); // 0x4169e1ff
 	stageTexture_[1] = Novice::LoadTexture("./Resources/white1x1.png"); // 0xff4500ff
@@ -13,17 +13,18 @@ void Select::Initialize()
 	stageTexture_[3] = Novice::LoadTexture("./Resources/white1x1.png"); // 0xff4500ff
 	stageTexture_[4] = Novice::LoadTexture("./Resources/white1x1.png"); // 0x4169e1ff
 
-	arrowTexture_[0] = Novice::LoadTexture("./Resources/white1x1.png"); // 0xb0c4deff
-	arrowTexture_[1] = Novice::LoadTexture("./Resources/white1x1.png"); // 0xb0c4deff
-	buttonTexture_ = Novice::LoadTexture("./Resources/white1x1.png"); // 0xffd700ff
-		
+	arrowTexture_[0] = Novice::LoadTexture("./Resources/StageSelect/arrow.png"); // 0xb0c4deff
+	arrowTexture_[1] = Novice::LoadTexture("./Resources/StageSelect/arrow.png"); // 0xb0c4deff
+	buttonTexture_ = Novice::LoadTexture("./Resources/StageSelect/A.png"); // 0xffd700ff
+	uiTexture_= Novice::LoadTexture("./Resources/StageSelect/titleText.png");
+
 	bg_.center = { 640.0f,360.0f };
 	bg_.rad = { 1280.0f,720.0f };
 	QuadVer(bg_.center, bg_.rad.x, bg_.rad.y, bg_.LT, bg_.RT, bg_.LB, bg_.RB);
 	
 
 	star_.center = { 50.0f,50.0f };
-	star_.rad = { 20.0f,20.0f };
+	star_.rad = { 64.0f,64.0f };
 	QuadVer(star_.center, star_.rad.x, star_.rad.y, star_.LT, star_.RT, star_.LB, star_.RB);
 	
 
@@ -35,34 +36,25 @@ void Select::Initialize()
 	stage_[1].rad = { 588.0f,216.0f };
 	QuadVer(stage_[1].center, stage_[1].rad.x, stage_[1].rad.y, stage_[1].LT, stage_[1].RT, stage_[1].LB, stage_[1].RB);
 
-	/*stage_[2].center = { 640.0f,360.0f };
-	stage_[2].rad = { 980.0f,420.0f };
-	QuadVer(stage_[2].center, stage_[2].rad.x, stage_[2].rad.y, stage_[2].LT, stage_[2].RT, stage_[2].LB, stage_[2].RB);
-
-	stage_[3].center = { 640.0f,360.0f };
-	stage_[3].rad = { 980.0f,420.0f };
-	QuadVer(stage_[3].center, stage_[3].rad.x, stage_[3].rad.y, stage_[3].LT, stage_[3].RT, stage_[3].LB, stage_[3].RB);
-
-	stage_[4].center = { 640.0f,-30.0f };
-	stage_[4].rad = { 588.0f,216.0f };
-	QuadVer(stage_[4].center, stage_[4].rad.x, stage_[4].rad.y, stage_[4].LT, stage_[4].RT, stage_[4].LB, stage_[4].RB);*/
-	
-
 
 
 	arrow_[0].center = {640.0f,620.0f};
-	arrow_[0].rad = {50.0f,50.0f};
+	arrow_[0].rad = {64.0f,64.0f};
 	QuadVer(arrow_[0].center, arrow_[0].rad.x, arrow_[0].rad.y, arrow_[0].LT, arrow_[0].RT, arrow_[0].LB, arrow_[0].RB);
 
 	
 	arrow_[1].center = { 640.0f,100.0f };
-	arrow_[1].rad = { 50.0f,50.0f };
+	arrow_[1].rad = { 64.0f,64.0f };
 	QuadVer(arrow_[1].center, arrow_[1].rad.x, arrow_[1].rad.y, arrow_[1].LT, arrow_[1].RT, arrow_[1].LB, arrow_[1].RB);
 
 
 	button_.center = { 700.0f,500.0f };
-	button_.rad = { 50.0f,50.0f };
+	button_.rad = { 66.0f,66.0f };
 	QuadVer(button_.center, button_.rad.x, button_.rad.y, button_.LT, button_.RT, button_.LB, button_.RB);
+
+	ui_.center = { 160.0f,650.0f };
+	ui_.rad = { 350.0f,70.0f };
+	QuadVer(ui_.center, ui_.rad.x, ui_.rad.y, ui_.LT, ui_.RT, ui_.LB, ui_.RB);
 
 	
 	buttonTime_ = kButtonTime;
@@ -86,8 +78,8 @@ void Select::Initialize()
 	arrowStopPos_[0] = { 640.0f,650.0f };
 	arrowStopPos_[1]= { 640.0f,70.0f };
 
-	buttonStartRad_= { 50.0f,50.0f };
-	buttonStopRad_ = { 60.0f,60.0f };
+	buttonStartRad_= { 66.0f,66.0f };
+	buttonStopRad_ = { 76.0f,76.0f };
 
 	isPoyon_ = false;
 	isPoyonChange_ = false;
@@ -153,14 +145,14 @@ void Select::Update()
 	}
 
 
-	arrow_[0].rad = { 50.0f,50.0f };
+	arrow_[0].rad = { 64.0f,64.0f };
 
 	for (int i = 0; i < 2; i++)
 	{
 		QuadVer(arrow_[i].center, arrow_[i].rad.x, arrow_[i].rad.y, arrow_[i].LT, arrow_[i].RT, arrow_[i].LB, arrow_[i].RB);
 	}
 
-	QuadVer(button_.center, button_.rad.x, button_.rad.y, button_.LT, button_.RT, button_.LB, button_.RB);
+	
 
 }
 
@@ -179,7 +171,7 @@ void Select::Draw()
 			(int)star_.RT.x, (int)star_.RT.y,
 			(int)star_.LB.x, (int)star_.LB.y,
 			(int)star_.RB.x, (int)star_.RB.y,
-			0, 0, (int)star_.rad.x, (int)star_.rad.y,
+			0, 0, 64,64,
 			starTexture_, 0xffd700ff);
 	}
 
@@ -223,12 +215,12 @@ void Select::Draw()
 
 	if (stageNum_ != 5)
 	{
-		Novice::DrawQuad((int)arrow_[0].LT.x, (int)arrow_[0].LT.y,
-			(int)arrow_[0].RT.x, (int)arrow_[0].RT.y,
-			(int)arrow_[0].LB.x, (int)arrow_[0].LB.y,
+		Novice::DrawQuad((int)arrow_[0].LB.x, (int)arrow_[0].LB.y,
 			(int)arrow_[0].RB.x, (int)arrow_[0].RB.y,
+			(int)arrow_[0].LT.x, (int)arrow_[0].LT.y,
+			(int)arrow_[0].RT.x, (int)arrow_[0].RT.y,
 			0, 0, (int)arrow_[0].rad.x, (int)arrow_[0].rad.y,
-			arrowTexture_[0], 0xb0c4deff);
+			arrowTexture_[0], WHITE);
 	}
 	if (stageNum_ != 1)
 	{
@@ -237,15 +229,22 @@ void Select::Draw()
 			(int)arrow_[1].LB.x, (int)arrow_[1].LB.y,
 			(int)arrow_[1].RB.x, (int)arrow_[1].RB.y,
 			0, 0, (int)arrow_[1].rad.x, (int)arrow_[1].rad.y,
-			arrowTexture_[1], 0xb0c4deff);
+			arrowTexture_[1], WHITE);
 	}
 
 	Novice::DrawQuad((int)button_.LT.x, (int)button_.LT.y,
 		(int)button_.RT.x, (int)button_.RT.y,
 		(int)button_.LB.x, (int)button_.LB.y,
 		(int)button_.RB.x, (int)button_.RB.y,
-		0, 0, (int)button_.rad.x, (int)button_.rad.y,
-		buttonTexture_, 0xffd700ff);
+		0, 0, 66, 66,
+		buttonTexture_, WHITE);
+
+	Novice::DrawQuad((int)ui_.LT.x, (int)ui_.LT.y,
+		(int)ui_.RT.x, (int)ui_.RT.y,
+		(int)ui_.LB.x, (int)ui_.LB.y,
+		(int)ui_.RB.x, (int)ui_.RB.y,
+		0, 0, (int)ui_.rad.x, (int)ui_.rad.y,
+		uiTexture_, WHITE);
 }
 
 void Select::PlusStageNum()
@@ -269,10 +268,6 @@ void Select::MinasStageNum()
 		stageNum_ -= 1;
 		stageChangeInterval_ = kStageChangeTime;
 		changeStage = -1;
-		/*if (stageNum_ == 0)
-		{
-			stageNum_ = kStageNum;
-		}*/
 	}
 }
 
@@ -353,6 +348,8 @@ void Select::ButtonUpdate()
 			buttonTime_ = kButtonTime;
 		}
 	}
+
+	QuadVer(button_.center, button_.rad.x, button_.rad.y, button_.LT, button_.RT, button_.LB, button_.RB);
 }
 
 Vector2 Select::Lerp(const Vector2& v1, const Vector2& v2, float t)

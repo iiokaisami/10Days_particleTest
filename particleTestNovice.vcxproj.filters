@@ -135,5 +135,6 @@
     <ClInclude Include="MoveEmitter.h" />
     <ClInclude Include="Select.h" />
     <ClInclude Include="Result.h" />
+    <ClInclude Include="Easing.h" />
   </ItemGroup>
 </Project>

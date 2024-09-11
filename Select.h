@@ -4,26 +4,10 @@
 #include <functional>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "Easing.h"
 
 const int kStageNum = 5;
 
-struct  Quad
-{
-	Vector2 center;
-	Vector2 rad;
-	Vector2 LT;
-	Vector2 LB;
-	Vector2 RT;
-	Vector2 RB;
-};
-
-template<class T> T EasingFunc(T start, T movement, std::function<T(T)> func, T t) { return start + func(t) * movement; }
-
-template<class T> T EaseOutElastic(T x) {
-	const T c4 = float((2 * M_PI) / 3);
-
-	return x == 0 ? 0 : x == 1 ? 1 : powf(2, -10 * x) * sinf((x * 10 - 0.75f) * c4) + 1;
-}
 
 class Select
 {
@@ -35,6 +19,7 @@ public:
 	void Draw();
 
 	int GetStageNum() { return stageNum_; }
+	void SetScore(int score) { score_ = score; }
 
 	void PlusStageNum();
 	void MinasStageNum();
@@ -55,12 +40,14 @@ private:
 	int stageTexture_[kStageNum];
 	int arrowTexture_[2];
 	int buttonTexture_ = 0;
+	int uiTexture_ = 0;
 
 	Quad bg_{};
 	Quad star_{};
 	Quad stage_[kStageNum];
 	Quad arrow_[2];
 	Quad button_{};
+	Quad ui_{};
 
 	const int kTimeCount = 1;
 	const int kButtonTime = 300;
@@ -68,7 +55,7 @@ private:
 	const int kStarEraseTime = 10;
 	const int kStageChangeTime = 20;
 	const float kStageChangeCo = 0.1f;
-	const float kButtonCo_ = 0.1f;
+	const float kButtonCo_ = 0.05f;
 
 	int buttonTime_ = 0;
 	float poyonTime_ = 0;
@@ -96,4 +83,6 @@ private:
 
 	bool isPoyon_ = false;
 	bool isPoyonChange_ = false;
+
+	int score_ = 0;
 };

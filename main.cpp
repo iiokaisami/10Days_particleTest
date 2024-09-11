@@ -8,6 +8,7 @@
 #include "BrockEmitter.h"
 #include "MoveEmitter.h"
 #include "Select.h"
+#include "Result.h"
 
 const int number = 8;
 
@@ -91,6 +92,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	int stage = 0;
 
+	Result* result = new Result();
+	result->Initialize();
+
+	int scene = 0;
+
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
@@ -108,27 +114,56 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 		
-
-
-		if (keys[(DIK_W)])
+		if (keys[(DIK_RETURN)])
 		{
-			select->MinasStageNum();
-		}
-		if (keys[(DIK_S)])
-		{
-			select->PlusStageNum();
-			
-		}
-
-
-		if (keys[(DIK_SPACE)])
-		{
-			// スペース押したらSutageNum（ステージ番号）取得
-			stage = select->GetStageNum();
+			if (scene == 0)
+			{
+				scene = 1;
+			}
+			else if (scene == 1)
+			{
+				scene = 0;
+			}
 		}
 
-		
-		select->Update();
+		if (scene == 0)
+		{
+
+
+
+			if (keys[(DIK_W)])
+			{
+				select->MinasStageNum();
+			}
+			if (keys[(DIK_S)])
+			{
+				select->PlusStageNum();
+
+			}
+
+
+			if (keys[(DIK_SPACE)])
+			{
+				// スペース押したらSutageNum（ステージ番号）取得
+				stage = select->GetStageNum();
+			}
+
+
+			select->Update();
+		}
+		else if (scene == 1)
+		{
+			if (keys[(DIK_W)])
+			{
+				result->ChangeNext();
+			}
+			if (keys[(DIK_S)])
+			{
+				result->ChangeNext();
+			}
+
+			result->Update();
+		}
 
 		///
 		/// ↑更新処理ここまで
@@ -138,9 +173,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
-		Novice::ScreenPrintf(0, 0, "%ds", stage);
-		select->Draw();
-
+		//Novice::ScreenPrintf(0, 0, "%d", stage);
+		if (scene == 0)
+		{
+			select->Draw();
+		}
+		else if (scene == 1)
+		{
+			result->Draw();
+		}
 
 		///
 		/// ↑描画処理ここまで
@@ -156,7 +197,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 
 	delete select;
-
+	delete result;
 
 	// ライブラリの終了
 	Novice::Finalize();
