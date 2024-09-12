@@ -182,26 +182,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				result->SetEvaluation(2);
 			}
 
-			// スコアの切り替えテスト
+			// ステージの切り替えテスト
 			if (keys[(DIK_4)] && !preKeys[(DIK_4)])
 			{
-				result->SetScore(623);
+				result->SetStage(1);
 			}
-
 			if (keys[(DIK_5)] && !preKeys[(DIK_5)])
 			{
-				result->SetScore(129);
+				result->SetStage(2);
 			}
 			if (keys[(DIK_6)] && !preKeys[(DIK_6)])
 			{
-				result->SetScore(0);
+				result->SetStage(3);
 			}
-
 			if (keys[(DIK_7)] && !preKeys[(DIK_7)])
 			{
-				result->SetScore(12);
+				result->SetStage(4);
 			}
-
+			if (keys[(DIK_8)] && !preKeys[(DIK_8)])
+			{
+				result->SetStage(5);
+			}
 
 			result->Update();
 		}

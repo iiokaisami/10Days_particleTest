@@ -19,7 +19,7 @@ public:
 
 	void SetEvaluation(int evaluation) { evaluationPoint_ = evaluation; }
 	void SetScore(int32_t score) { score_ = score; }
-	void SetStage(int stageNum) { stageNum_ = stageNum; }
+	void SetStage(int stageNum) { stageNumber_ = stageNum; }
 
 	void StarUpdate();
 	void ScoreUpdate();
@@ -47,7 +47,6 @@ private:
 
 	int nextUITex_[2];
 	int evaluationTex_ = 0;
-	/// score & stageNum
 
 	Quad bg_{};
 	Quad star_{};
@@ -55,6 +54,7 @@ private:
 	Quad button_{};
 	Quad underBar_{};
 	Quad number_[4];
+	Quad stageNum_{};
 	Quad stage_{};
 	Quad human_{};
 	Quad evaluation_{};
@@ -94,7 +94,7 @@ private:
 	int score2_ = 0;
 	int score3_ = 0;
 	int score4_ = 0;
-	int stageNum_ = 0;
+	int stageNumber_ = 0;
 	int changeNext_ = 1;
 
 	int num_[4];

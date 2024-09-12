@@ -18,7 +18,7 @@ void Result::Initialize()
 	forUITexture_[0] = Novice::LoadTexture("./Resources/result/for_next.png");
 	forUITexture_[1] = Novice::LoadTexture("./Resources/result/for_title.png");
 	buttonTexture_ = Novice::LoadTexture("./Resources/StageSelect/A.png");
-	underBarTexture_ = Novice::LoadTexture("./Resources/white1x1.png"); // 0xffd700ff
+	underBarTexture_ = Novice::LoadTexture("./Resources/white1x1.png");
 	numberTexture_ = Novice::LoadTexture("./Resources/number/namber_yellow.png");
 	stageTexture_ = Novice::LoadTexture("./Resources/result/stage.png");
 	humanTexture_ = Novice::LoadTexture("./Resources/result/backGround_player.png");
@@ -51,11 +51,9 @@ void Result::Initialize()
 	underBar_.rad = { 500.0f,10.0f };
 	QuadVer(underBar_.center, underBar_.rad.x, underBar_.rad.y, underBar_.LT, underBar_.RT, underBar_.LB, underBar_.RB);
 
-	////////////////////////////////////////////////
-	//number_[].center = {640.0f,250.0f};
-	//number_.rad = {350.0f, 10.0f };
-	//QuadVer(number_.center, number_.rad.x, number_.rad.y, number_.LT, number_.RT, number_.LB, number_.RB);
-	////////////////////////////////////////////////
+	stageNum_.center = { 55,40 };
+	stageNum_.rad = { 64,64 };
+	QuadVer(stageNum_.center, stageNum_.rad.x, stageNum_.rad.y, stageNum_.LT, stageNum_.RT, stageNum_.LB, stageNum_.RB);
 
 	stage_.center = { 110.0f,80.0f };
 	stage_.rad = { 220.0f,160.0f };
@@ -107,7 +105,7 @@ void Result::Initialize()
 
 	evaluationPoint_ = 0;
 
-	score_ = 223;
+	stageNumber_ = 0;
 }
 
 void Result::Update()
@@ -195,6 +193,12 @@ void Result::Draw()
 		numberSize_ * num_[3], 0, numberSize_, numberSize_,
 		numberTexture_, WHITE);
 
+	Novice::DrawQuad((int)stageNum_.LT.x, (int)stageNum_.LT.y,
+		(int)stageNum_.RT.x, (int)stageNum_.RT.y,
+		(int)stageNum_.LB.x, (int)stageNum_.LB.y,
+		(int)stageNum_.RB.x, (int)stageNum_.RB.y,
+		numberSize_ * stageNumber_, 0, numberSize_, numberSize_,
+		numberTexture_, WHITE);
 
 	Novice::DrawQuad((int)stage_.LT.x, (int)stage_.LT.y,
 		(int)stage_.RT.x, (int)stage_.RT.y,
