@@ -24,7 +24,15 @@ public:
 	void Draw();
 
 	int GetStageNum() { return stageNum_; }
-	void SetScore(int score) { score_ = score; }
+	void SetHighScore(int score1, int score2, int score3, int score4, int score5) 
+	{
+		highScore_[0] = score1;
+		highScore_[1] = score2;
+		highScore_[2] = score3;
+		highScore_[3] = score4;
+		highScore_[4] = score5;
+		
+	}
 
 	void PlusStageNum();
 	void MinasStageNum();
@@ -33,6 +41,7 @@ public:
 	void StarUpdate();
 	void ArrowUpdate();
 	void ButtonUpdate();
+	void HighScoreUpdate();
 
 	void PopHuman();
 	void HumanUpdate();
@@ -69,10 +78,12 @@ private:
 	int buttonTexture_ = 0;
 	int uiTexture_ = 0;
 	int humanTexture_ = 0;
+	int numberTexture_ = 0;
 
 	Quad bg_{};
 	Quad star_{};
 	Quad stage_[kStageNum];
+	Quad number_[4][5];
 	Quad arrow_[2];
 	Quad button_{};
 	Quad ui_{};
@@ -101,6 +112,9 @@ private:
 
 	bool isStarDraw_ = true;
 
+	int num_[4][5];
+	int numberSize_ = 64;
+
 	int stageNum_ = 0;
 	int changeStage = 0;
 	Vector2 topPos_{};
@@ -119,10 +133,15 @@ private:
 	bool isPoyonChange_ = false;
 	bool isPopHuman_ = false;
 
-	int score_ = 0;
+	int highScore_[5];
+	int highScore2_[5];
+	int highScore3_[5];
+	int highScore4_[5];
 
 	Vector2 rotateLeftTop{};
 	Vector2 rotateRightTop{};
 	Vector2 rotateLeftBottom{};
 	Vector2 rotateRightBottom{};
+
+	Vector2 scorePos_{};
 };

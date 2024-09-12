@@ -5,7 +5,7 @@ Select::~Select(){}
 void Select::Initialize()
 {
 	bgTexture_ = Novice::LoadTexture("./Resources/white1x1.png"); // 0x191970ff
-	starTexture_ = Novice::LoadTexture("./Resources/StageSelect/flowerYellow.png"); // 0xffd700ff
+	starTexture_ = Novice::LoadTexture("./Resources/StageSelect/flowerYellow.png");
 
 	stageTexture_[0] = Novice::LoadTexture("./Resources/white1x1.png"); // 0x4169e1ff
 	stageTexture_[1] = Novice::LoadTexture("./Resources/white1x1.png"); // 0xff4500ff
@@ -13,11 +13,12 @@ void Select::Initialize()
 	stageTexture_[3] = Novice::LoadTexture("./Resources/white1x1.png"); // 0xff4500ff
 	stageTexture_[4] = Novice::LoadTexture("./Resources/white1x1.png"); // 0x4169e1ff
 
-	arrowTexture_[0] = Novice::LoadTexture("./Resources/StageSelect/arrow.png"); // 0xb0c4deff
-	arrowTexture_[1] = Novice::LoadTexture("./Resources/StageSelect/arrow.png"); // 0xb0c4deff
-	buttonTexture_ = Novice::LoadTexture("./Resources/StageSelect/A.png"); // 0xffd700ff
+	arrowTexture_[0] = Novice::LoadTexture("./Resources/StageSelect/arrow.png");
+	arrowTexture_[1] = Novice::LoadTexture("./Resources/StageSelect/arrow.png");
+	buttonTexture_ = Novice::LoadTexture("./Resources/StageSelect/A.png"); 
 	uiTexture_= Novice::LoadTexture("./Resources/StageSelect/titleText.png");
 	humanTexture_ = Novice::LoadTexture("./Resources/StageSelect/player.png");
+	numberTexture_ = Novice::LoadTexture("./Resources/number/namber_yellow.png");
 
 	bg_.center = { 640.0f,360.0f };
 	bg_.rad = { 1280.0f,720.0f };
@@ -36,7 +37,6 @@ void Select::Initialize()
 	stage_[1].center = { 640.0f,750.0f };
 	stage_[1].rad = { 588.0f,216.0f };
 	QuadVer(stage_[1].center, stage_[1].rad.x, stage_[1].rad.y, stage_[1].LT, stage_[1].RT, stage_[1].LB, stage_[1].RB);
-
 
 
 	arrow_[0].center = {640.0f,620.0f};
@@ -86,6 +86,8 @@ void Select::Initialize()
 	isPoyon_ = false;
 	isPoyonChange_ = false;
 	isPopHuman_ = false;
+
+	scorePos_ = { 350,100 };
 }
 
 void Select::Update()
@@ -172,6 +174,7 @@ void Select::Update()
 		HumanUpdate();
 	}
 
+	HighScoreUpdate();
 }
 
 void Select::Draw()
@@ -264,6 +267,22 @@ void Select::Draw()
 			(int)arrow_[1].RB.x, (int)arrow_[1].RB.y,
 			0, 0, (int)arrow_[1].rad.x, (int)arrow_[1].rad.y,
 			arrowTexture_[1], WHITE);
+	}
+
+	for (int j = 0; j < 5; j++)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			if (j == stageNum_ or j==stageNum_ - 1)
+			{
+				Novice::DrawQuad((int)number_[i][j].LT.x, (int)number_[i][j].LT.y,
+					(int)number_[i][j].RT.x, (int)number_[i][j].RT.y,
+					(int)number_[i][j].LB.x, (int)number_[i][j].LB.y,
+					(int)number_[i][j].RB.x, (int)number_[i][j].RB.y,
+					numberSize_ * num_[i][j], 0, numberSize_, numberSize_,
+					numberTexture_, WHITE);
+			}
+		}
 	}
 
 	Novice::DrawQuad((int)button_.LT.x, (int)button_.LT.y,
@@ -385,6 +404,42 @@ void Select::ButtonUpdate()
 	}
 
 	QuadVer(button_.center, button_.rad.x, button_.rad.y, button_.LT, button_.RT, button_.LB, button_.RB);
+}
+
+void Select::HighScoreUpdate()
+{
+	for (int i = 0; i < 5; i++)
+	{
+		num_[0][i] = highScore_[i] % 10;
+		highScore2_[i] = (highScore_[i] - num_[0][i]) / 10;
+		num_[1][i] = highScore2_[i] % 10;
+		highScore3_[i] = (highScore2_[i] - num_[1][i]) / 10;
+		num_[2][i] = highScore3_[i] % 10;
+		highScore4_[i] = (highScore3_[i] - num_[2][i]) / 10;
+		num_[3][i] = highScore4_[i] % 10;
+
+
+		number_[0][i].center = {stage_[i].center.x + scorePos_.x,stage_[i].center.y + scorePos_.y};
+		number_[0][i].rad = {64,64};
+
+		number_[1][i].center = {number_[0][i].center.x - 70 ,number_[0][i].center.y};
+		number_[1][i].rad = number_[0][i].rad;
+
+		number_[2][i].center = {number_[1][i].center.x - 70 ,number_[0][i].center.y};
+		number_[2][i].rad = number_[0][i].rad;
+
+		number_[3][i].center = {number_[2][i].center.x - 70 ,number_[0][i].center.y};
+		number_[3][i].rad = number_[0][i].rad;
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			QuadVer(number_[j][i].center, number_[j][i].rad.x, number_[j][i].rad.y, number_[j][i].LT, number_[j][i].RT, number_[j][i].LB, number_[j][i].RB);
+		}
+	}
+	
 }
 
 void Select::PopHuman()

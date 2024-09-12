@@ -154,6 +154,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				stage = select->GetStageNum();
 			}
 
+			// スコアの切り替えテスト
+			if (keys[(DIK_4)] && !preKeys[(DIK_4)])
+			{
+				select->SetHighScore(623,123,456,789,98);
+			}
+
+			if (keys[(DIK_5)] && !preKeys[(DIK_5)])
+			{
+				select->SetHighScore(129,89,345,111,0);
+			}
+			if (keys[(DIK_6)] && !preKeys[(DIK_6)])
+			{
+				select->SetHighScore(0,437,868,231,564);
+			}
+
+			if (keys[(DIK_7)] && !preKeys[(DIK_7)])
+			{
+				select->SetHighScore(12,2,8,5,7);
+			}
 
 			select->Update();
 		}
@@ -182,27 +201,26 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				result->SetEvaluation(2);
 			}
 
-			// ステージの切り替えテスト
+			// スコアの切り替えテスト
 			if (keys[(DIK_4)] && !preKeys[(DIK_4)])
 			{
-				result->SetStage(1);
+				result->SetStage(623);
 			}
+
 			if (keys[(DIK_5)] && !preKeys[(DIK_5)])
 			{
-				result->SetStage(2);
+				result->SetScore(129);
 			}
 			if (keys[(DIK_6)] && !preKeys[(DIK_6)])
 			{
-				result->SetStage(3);
+				result->SetScore(0);
 			}
+
 			if (keys[(DIK_7)] && !preKeys[(DIK_7)])
 			{
-				result->SetStage(4);
+				result->SetScore(12);
 			}
-			if (keys[(DIK_8)] && !preKeys[(DIK_8)])
-			{
-				result->SetStage(5);
-			}
+
 
 			result->Update();
 		}
