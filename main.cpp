@@ -97,6 +97,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	int scene = 0;
 
+	BrockEmitter* brockEmit = new BrockEmitter();
+	brockEmit->BrockEmitterInitialize();
+
+	Vector2 pos = { 700,300 };
+
+
+	int timer = 60;
+
+
+
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
@@ -165,6 +175,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			result->Update();
 		}
 
+
+		timer--;
+
+
+		// フラグが立った時にbrockEmit->Emit(pos)を呼び出す
+		if (timer == 0)
+		{
+			brockEmit->Emit(pos, { 50.0f,50.0f });
+			timer = 60;
+		}
+
+		// アップデート
+		brockEmit->Update();
+
+
+
 		///
 		/// ↑更新処理ここまで
 		///
@@ -182,6 +208,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{
 			result->Draw();
 		}
+
+
+		Novice::DrawEllipse((int)pos.x, (int)pos.y, 10, 10, 0.0f, WHITE, kFillModeSolid);
+		brockEmit->Draw();
+
 
 		///
 		/// ↑描画処理ここまで
