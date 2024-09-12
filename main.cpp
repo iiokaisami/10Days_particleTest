@@ -12,10 +12,6 @@
 
 const int number = 8;
 
-struct Matrix2x2
-{
-	float m[2][2];
-};
 
 struct Matrix3x3
 {

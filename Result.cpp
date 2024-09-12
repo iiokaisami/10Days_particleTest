@@ -1,9 +1,16 @@
 #include "Result.h"
+#include <time.h>
+#include <stdio.h>
 
 Result::~Result(){}
 
 void Result::Initialize()
 {
+
+	unsigned int currenttime = (unsigned int)time(nullptr);
+	srand(currenttime);
+
+
 	bgTexture_ = Novice::LoadTexture("./Resources/white1x1.png"); // 0x191970ff
 	starTexture_ = Novice::LoadTexture("./Resources/StageSelect/flowerYellow.png");
 	uiTexture_[0] = Novice::LoadTexture("./Resources/result/next.png");

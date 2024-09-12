@@ -17,6 +17,7 @@ void Select::Initialize()
 	arrowTexture_[1] = Novice::LoadTexture("./Resources/StageSelect/arrow.png"); // 0xb0c4deff
 	buttonTexture_ = Novice::LoadTexture("./Resources/StageSelect/A.png"); // 0xffd700ff
 	uiTexture_= Novice::LoadTexture("./Resources/StageSelect/titleText.png");
+	humanTexture_ = Novice::LoadTexture("./Resources/StageSelect/player.png");
 
 	bg_.center = { 640.0f,360.0f };
 	bg_.rad = { 1280.0f,720.0f };
@@ -62,6 +63,7 @@ void Select::Initialize()
 	stageChangeInterval_ = kStageChangeTime;
 	stageChangeTime_ = 0;
 	arrowTime_ = 0;
+	humanPopTime_ = kHumanPopTime_;
 
 	isStarDraw_ = true;
 
@@ -83,6 +85,7 @@ void Select::Initialize()
 
 	isPoyon_ = false;
 	isPoyonChange_ = false;
+	isPopHuman_ = false;
 }
 
 void Select::Update()
@@ -153,6 +156,21 @@ void Select::Update()
 	}
 
 	
+	if (!isPopHuman_)
+	{
+		humanPopTime_ -= kTimeCount;
+		if (humanPopTime_ <= 0)
+		{
+			PopHuman();
+			isPopHuman_ = true;
+			humanPopTime_ = kHumanPopTime_;
+		}
+	}
+
+	if (isPopHuman_)
+	{
+		HumanUpdate();
+	}
 
 }
 
@@ -175,6 +193,22 @@ void Select::Draw()
 			starTexture_, 0xffd700ff);
 	}
 
+	if (isPopHuman_)
+	{
+		/*Novice::DrawQuad(int(rotateLeftTop.x), int(rotateLeftTop.y),
+			int(rotateRightTop.x), int(rotateRightTop.y),
+			int(rotateLeftBottom.x), int(rotateLeftBottom.y),
+			int(rotateRightBottom.x), int(rotateRightBottom.y),
+			0, 0, int(human_.rad.x), int(human_.rad.y),
+			humanTexture_, WHITE);*/
+
+		Novice::DrawQuad(int(human_.LT.x), int(human_.LT.y),
+			int(human_.RT.x), int(human_.RT.y),
+			int(human_.LB.x), int(human_.LB.y),
+			int(human_.RB.x), int(human_.RB.y),
+			0, 0, int(human_.rad.x), int(human_.rad.y),
+			humanTexture_, WHITE);
+	}
 
 	Novice::DrawQuad((int)stage_[0].LT.x, (int)stage_[0].LT.y,
 		(int)stage_[0].RT.x, (int)stage_[0].RT.y,
@@ -245,6 +279,7 @@ void Select::Draw()
 		(int)ui_.RB.x, (int)ui_.RB.y,
 		0, 0, (int)ui_.rad.x, (int)ui_.rad.y,
 		uiTexture_, WHITE);
+
 }
 
 void Select::PlusStageNum()
@@ -350,6 +385,62 @@ void Select::ButtonUpdate()
 	}
 
 	QuadVer(button_.center, button_.rad.x, button_.rad.y, button_.LT, button_.RT, button_.LB, button_.RB);
+}
+
+void Select::PopHuman()
+{
+	human_.center.x = float(rand() % 360 + 1550);
+	human_.center.y = float(rand() % 500 + 200);
+
+	//human_.center = { 500,500 };
+
+	human_.rad = { 360,210 };
+
+	humanRotate_ = human_;
+
+	QuadVer(human_.center, human_.rad.x, human_.rad.y, human_.LT, human_.RT, human_.LB, human_.RB);
+
+	//QuadVer(human_.center, human_.rad.x, human_.rad.y, humanRotate_.LT, humanRotate_.RT, humanRotate_.LB, humanRotate_.RB);
+}
+
+void Select::HumanUpdate()
+{
+
+	/*theta_ += 0.03f;
+
+	Matrix2x2 rotataematrix = MakeRotateMatrix(theta_);
+
+	rotateLeftTop = Multiply(humanRotate_.LT, rotataematrix);
+	rotateLeftTop.x += human_.center.x;
+	rotateLeftTop.y += human_.center.y;
+
+	rotateRightTop = Multiply(humanRotate_.RT, rotataematrix);
+	rotateRightTop.x += human_.center.x;
+	rotateRightTop.y += human_.center.y;
+
+	rotateLeftBottom = Multiply(humanRotate_.LB, rotataematrix);
+	rotateLeftBottom.x += human_.center.x;
+	rotateLeftBottom.y += human_.center.y;
+
+	rotateRightBottom = Multiply(humanRotate_.RB, rotataematrix);
+	rotateRightBottom.x += human_.center.x;
+	rotateRightBottom.y += human_.center.y;*/
+
+	human_.center.x -= 2.0f;
+
+	QuadVer(human_.center, human_.rad.x, human_.rad.y, human_.LT, human_.RT, human_.LB, human_.RB);
+
+	/*if (rotateLeftTop.x <= -400)
+	{
+		isPopHuman_ = false;
+		theta_ = 0;
+	}*/
+
+	if (human_.center.x <= -400)
+	{
+		isPopHuman_ = false;
+		theta_ = 0;
+	}
 }
 
 Vector2 Select::Lerp(const Vector2& v1, const Vector2& v2, float t)

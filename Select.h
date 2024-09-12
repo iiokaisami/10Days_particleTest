@@ -8,6 +8,11 @@
 
 const int kStageNum = 5;
 
+struct Matrix2x2
+{
+	float m[2][2];
+};
+
 
 class Select
 {
@@ -29,9 +34,31 @@ public:
 	void ArrowUpdate();
 	void ButtonUpdate();
 
+	void PopHuman();
+	void HumanUpdate();
+
 	Vector2 Lerp(const Vector2& v1, const Vector2& v2, float t);
 
 	void QuadVer(Vector2 pos, float width, float height, Vector2& lt, Vector2& rt, Vector2& lb, Vector2& rb);
+
+
+	Matrix2x2 MakeRotateMatrix(float theta)
+	{
+		Matrix2x2 matrix1;
+		matrix1.m[0][0] = cosf(theta);
+		matrix1.m[0][1] = sinf(theta);
+		matrix1.m[1][0] = -sinf(theta);
+		matrix1.m[1][1] = cosf(theta);
+		return matrix1;
+	}
+
+	Vector2 Multiply(Vector2 vector, Matrix2x2 matrix)
+	{
+		Vector2 vector3;
+		vector3.x = (vector.x * matrix.m[0][0]) + (vector.y * matrix.m[1][0]);
+		vector3.y = (vector.x * matrix.m[0][1]) + (vector.y * matrix.m[1][1]);
+		return vector3;
+	}
 
 private:
 
@@ -41,6 +68,7 @@ private:
 	int arrowTexture_[2];
 	int buttonTexture_ = 0;
 	int uiTexture_ = 0;
+	int humanTexture_ = 0;
 
 	Quad bg_{};
 	Quad star_{};
@@ -48,6 +76,9 @@ private:
 	Quad arrow_[2];
 	Quad button_{};
 	Quad ui_{};
+	Quad human_{};
+	Quad humanRotate_{};
+
 
 	const int kTimeCount = 1;
 	const int kButtonTime = 300;
@@ -56,6 +87,7 @@ private:
 	const int kStageChangeTime = 20;
 	const float kStageChangeCo = 0.1f;
 	const float kButtonCo_ = 0.05f;
+	const int kHumanPopTime_ = 300;
 
 	int buttonTime_ = 0;
 	float poyonTime_ = 0;
@@ -64,6 +96,8 @@ private:
 	float stageChangeTime_ = 0;
 	float arrowTimeCo = 0.02f;
 	float arrowTime_ = 0;
+	int humanPopTime_ = 0;
+	float theta_ = 0;
 
 	bool isStarDraw_ = true;
 
@@ -83,6 +117,12 @@ private:
 
 	bool isPoyon_ = false;
 	bool isPoyonChange_ = false;
+	bool isPopHuman_ = false;
 
 	int score_ = 0;
+
+	Vector2 rotateLeftTop{};
+	Vector2 rotateRightTop{};
+	Vector2 rotateLeftBottom{};
+	Vector2 rotateRightBottom{};
 };
