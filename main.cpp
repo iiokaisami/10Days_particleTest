@@ -241,8 +241,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 
-		Novice::DrawEllipse((int)pos.x, (int)pos.y, 10, 10, 0.0f, WHITE, kFillModeSolid);
-		brockEmit->Draw();
+		//Novice::DrawEllipse((int)pos.x, (int)pos.y, 10, 10, 0.0f, WHITE, kFillModeSolid);
+		//brockEmit->Draw();
 
 
 		///

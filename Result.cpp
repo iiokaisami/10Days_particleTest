@@ -74,7 +74,11 @@ void Result::Initialize()
 	isEvaluationDraw_ = false;
 	isHumanDraw_ = false;
 	isPopHuman_ = false;
-	isScoreDrawComp_ = false;
+	isScoreDrawComp0_ = false;
+	isScoreDrawComp1_= false;
+	isScoreDrawComp2_ = false;
+	isScoreDrawComp3_ = false;
+	isScoreDrawComp4_ = false;
 
 	changeNext_ = 1;
 
@@ -86,6 +90,7 @@ void Result::Initialize()
 	humanFloatTime_ = 0;
 	evaluationTime_ = kEvaluationTime;
 	evaluationEasTime_ = 0;
+	scoreCT_ = kScoreCT;
 
 	buttonStartRad_ = { 66.0f,66.0f };
 	buttonStopRad_ = { 76.0f,76.0f };
@@ -101,17 +106,17 @@ void Result::Initialize()
 	evaluationStopBPos_ = { 800.0f,evaluation_.LB.y };
 
 	evaluationPoint_ = 0;
+
+	score_ = 223;
 }
 
 void Result::Update()
 {
-	if (!isScoreDrawComp_)
+	if (scoreCT_ >= 0)
 	{
-		if (starTime_ <= 0)
-		{
-			isScoreDrawComp_ = true;
-		}
+		scoreCT_ -= kTimeCount;
 	}
+
 	StarUpdate();
 	ScoreUpdate();
 	UIUpdate();
@@ -161,7 +166,6 @@ void Result::Draw()
 		0, 0, 66, 66,
 		underBarTexture_, WHITE);
 
-	///////////////////////////////////////////////////
 
 	Novice::DrawQuad((int)number_[0].LT.x, (int)number_[0].LT.y,
 		(int)number_[0].RT.x, (int)number_[0].RT.y,
@@ -191,9 +195,6 @@ void Result::Draw()
 		numberSize_ * num_[3], 0, numberSize_, numberSize_,
 		numberTexture_, WHITE);
 
-	Novice::ScreenPrintf(200, 0, "%d", num_[2]);
-
-	///////////////////////////////////////////////////
 
 	Novice::DrawQuad((int)stage_.LT.x, (int)stage_.LT.y,
 		(int)stage_.RT.x, (int)stage_.RT.y,
@@ -243,13 +244,70 @@ void Result::StarUpdate()
 
 void Result::ScoreUpdate()
 {
-	num_[0] = score_ % 10;
-	score2_ = (score_ - num_[0]) / 10;
-	num_[1] = score2_ % 10;
-	score3_ = (score2_ - num_[1]) / 10;
-	num_[2] = score3_ % 10;
-	score4_ = (score3_ - num_[2]) / 10;
-	num_[3] = score4_ % 10;
+	if (scoreCT_ <= 0)
+	{
+		if (!isScoreDrawComp0_)
+		{
+			isScoreDrawComp0_ = true;
+			scoreCT_ = kScoreCT;
+		}
+		else if (!isScoreDrawComp1_)
+		{
+			isScoreDrawComp1_ = true;
+			scoreCT_ = kScoreCT;
+		}
+		else if (!isScoreDrawComp2_)
+		{
+			isScoreDrawComp2_ = true;
+			scoreCT_ = kScoreCT;
+		}
+		else if (!isScoreDrawComp3_)
+		{
+			isScoreDrawComp3_ = true;
+			scoreCT_ = kScoreCT;
+		}
+
+	}
+
+	if (!isScoreDrawComp0_)
+	{
+		num_[0] = rand() % 10;
+	}
+	else
+	{
+		num_[0] = score_ % 10;
+		score2_ = (score_ - num_[0]) / 10;
+	}
+
+	if (!isScoreDrawComp1_)
+	{
+		num_[1] = rand() % 10;
+	}
+	else
+	{
+		num_[1] = score2_ % 10;
+		score3_ = (score2_ - num_[1]) / 10;
+	}
+
+	if (!isScoreDrawComp2_)
+	{
+		num_[2] = rand() % 10;
+	}
+	else
+	{
+		num_[2] = score3_ % 10;
+		score4_ = (score3_ - num_[2]) / 10;
+	}
+
+	if (!isScoreDrawComp3_)
+	{
+		num_[3] = rand() % 10;
+	}
+	else
+	{
+		num_[3] = score4_ % 10;
+		isScoreDrawComp4_ = true;
+	}
 
 	number_[0].center = { 750,180 };
 	number_[0].rad = { 64,64 };
@@ -269,7 +327,7 @@ void Result::ScoreUpdate()
 	}
 
 	/////////////////////////////////////////////////////////// 
-	if (isScoreDrawComp_ && evaluationTime_ != 0)
+	if (isScoreDrawComp4_ && evaluationTime_ != 0)
 	{
 		evaluationTime_ -= kTimeCount;
 	}

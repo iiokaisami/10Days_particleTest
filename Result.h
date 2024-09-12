@@ -67,6 +67,7 @@ private:
 	const float kHumanCount = 0.02f;
 	const int kEvaluationTime = 60;
 	const float kEvaluationCount = 0.1f;
+	const int kScoreCT = 60;
 
 	int starTime_ = 0;
 	float buttonTime_ = 0;
@@ -76,12 +77,17 @@ private:
 	float humanFloatTime_ = 0;
 	int evaluationTime_ = 0;
 	float evaluationEasTime_ = 0;
+	int scoreCT_ = 0;
 
 	bool isStarDraw_ = true;
 	bool isEvaluationDraw_ = false;
 	bool isHumanDraw_ = false;
 	bool isPopHuman_ = false;
-	bool isScoreDrawComp_ = false;
+	bool isScoreDrawComp0_ = false;
+	bool isScoreDrawComp1_ = false;
+	bool isScoreDrawComp2_ = false;
+	bool isScoreDrawComp3_ = false;
+	bool isScoreDrawComp4_ = false;
 
 	int evaluationPoint_ = 0;
 	int32_t score_ = 0;
