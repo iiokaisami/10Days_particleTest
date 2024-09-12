@@ -168,6 +168,41 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 				result->ChangeNext();
 			}
 
+			// 評価の切り替えテスト
+			if (keys[(DIK_1)] && !preKeys[(DIK_1)])
+			{
+				result->SetEvaluation(0);
+			}
+			if (keys[(DIK_2)] && !preKeys[(DIK_2)])
+			{
+				result->SetEvaluation(1);
+			}
+			if (keys[(DIK_3)] && !preKeys[(DIK_3)])
+			{
+				result->SetEvaluation(2);
+			}
+
+			// スコアの切り替えテスト
+			if (keys[(DIK_4)] && !preKeys[(DIK_4)])
+			{
+				result->SetScore(623);
+			}
+
+			if (keys[(DIK_5)] && !preKeys[(DIK_5)])
+			{
+				result->SetScore(129);
+			}
+			if (keys[(DIK_6)] && !preKeys[(DIK_6)])
+			{
+				result->SetScore(0);
+			}
+
+			if (keys[(DIK_7)] && !preKeys[(DIK_7)])
+			{
+				result->SetScore(12);
+			}
+
+
 			result->Update();
 		}
 
@@ -195,7 +230,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
-		Novice::ScreenPrintf(0, 0, "%d", stage);
+
 		if (scene == 0)
 		{
 			select->Draw();

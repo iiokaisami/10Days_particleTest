@@ -48,14 +48,14 @@ void Result::Initialize()
 	QuadVer(button_.center, button_.rad.x, button_.rad.y, button_.LT, button_.RT, button_.LB, button_.RB);
 
 	underBar_.center = { 640.0f,250.0f };
-	underBar_.rad = { 350.0f,10.0f };
+	underBar_.rad = { 500.0f,10.0f };
 	QuadVer(underBar_.center, underBar_.rad.x, underBar_.rad.y, underBar_.LT, underBar_.RT, underBar_.LB, underBar_.RB);
 
-	//////////////////////////////////////////////
-	number_.center = { 640.0f,250.0f };
-	number_.rad = { 10.0f,350.0f };
-	QuadVer(number_.center, number_.rad.x, number_.rad.y, number_.LT, number_.RT, number_.LB, number_.RB);
-	//////////////////////////////////////////////
+	////////////////////////////////////////////////
+	//number_[].center = {640.0f,250.0f};
+	//number_.rad = {350.0f, 10.0f };
+	//QuadVer(number_.center, number_.rad.x, number_.rad.y, number_.LT, number_.RT, number_.LB, number_.RB);
+	////////////////////////////////////////////////
 
 	stage_.center = { 110.0f,80.0f };
 	stage_.rad = { 220.0f,160.0f };
@@ -161,13 +161,40 @@ void Result::Draw()
 		0, 0, 66, 66,
 		underBarTexture_, WHITE);
 
-	/*Novice::DrawQuad((int)number_.LT.x, (int)number_.LT.y,
-		(int)number_.RT.x, (int)number_.RT.y,
-		(int)number_.LB.x, (int)number_.LB.y,
-		(int)number_.RB.x, (int)number_.RB.y,
-		0, 0, (int)number_.rad.x, (int)number_.rad.y,
+	///////////////////////////////////////////////////
+
+	Novice::DrawQuad((int)number_[0].LT.x, (int)number_[0].LT.y,
+		(int)number_[0].RT.x, (int)number_[0].RT.y,
+		(int)number_[0].LB.x, (int)number_[0].LB.y,
+		(int)number_[0].RB.x, (int)number_[0].RB.y,
+		numberSize_ * num_[0], 0, numberSize_, numberSize_,
 		numberTexture_, WHITE);
-		*/
+
+	Novice::DrawQuad((int)number_[1].LT.x, (int)number_[1].LT.y,
+		(int)number_[1].RT.x, (int)number_[1].RT.y,
+		(int)number_[1].LB.x, (int)number_[1].LB.y,
+		(int)number_[1].RB.x, (int)number_[1].RB.y,
+		numberSize_ * num_[1], 0, numberSize_, numberSize_,
+		numberTexture_, WHITE);
+
+	Novice::DrawQuad((int)number_[2].LT.x, (int)number_[2].LT.y,
+		(int)number_[2].RT.x, (int)number_[2].RT.y,
+		(int)number_[2].LB.x, (int)number_[2].LB.y,
+		(int)number_[2].RB.x, (int)number_[2].RB.y,
+		numberSize_ * num_[2], 0, numberSize_, numberSize_,
+		numberTexture_, WHITE);
+
+	Novice::DrawQuad((int)number_[3].LT.x, (int)number_[3].LT.y,
+		(int)number_[3].RT.x, (int)number_[3].RT.y,
+		(int)number_[3].LB.x, (int)number_[3].LB.y,
+		(int)number_[3].RB.x, (int)number_[3].RB.y,
+		numberSize_ * num_[3], 0, numberSize_, numberSize_,
+		numberTexture_, WHITE);
+
+	Novice::ScreenPrintf(200, 0, "%d", num_[2]);
+
+	///////////////////////////////////////////////////
+
 	Novice::DrawQuad((int)stage_.LT.x, (int)stage_.LT.y,
 		(int)stage_.RT.x, (int)stage_.RT.y,
 		(int)stage_.LB.x, (int)stage_.LB.y,
@@ -216,8 +243,32 @@ void Result::StarUpdate()
 
 void Result::ScoreUpdate()
 {
+	num_[0] = score_ % 10;
+	score2_ = (score_ - num_[0]) / 10;
+	num_[1] = score2_ % 10;
+	score3_ = (score2_ - num_[1]) / 10;
+	num_[2] = score3_ % 10;
+	score4_ = (score3_ - num_[2]) / 10;
+	num_[3] = score4_ % 10;
 
+	number_[0].center = { 750,180 };
+	number_[0].rad = { 64,64 };
+	
+	number_[1].center = { number_[0].center.x - 70 ,number_[0].center.y };
+	number_[1].rad = number_[0].rad;
 
+	number_[2].center = { number_[1].center.x - 70 ,number_[0].center.y };
+	number_[2].rad = number_[0].rad;
+
+	number_[3].center = { number_[2].center.x - 70 ,number_[0].center.y };
+	number_[3].rad = number_[0].rad;
+
+	for (int i = 0; i < 4; i++)
+	{
+		QuadVer(number_[i].center, number_[i].rad.x, number_[i].rad.y, number_[i].LT, number_[i].RT, number_[i].LB, number_[i].RB);
+	}
+
+	/////////////////////////////////////////////////////////// 
 	if (isScoreDrawComp_ && evaluationTime_ != 0)
 	{
 		evaluationTime_ -= kTimeCount;

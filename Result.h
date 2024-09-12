@@ -54,7 +54,7 @@ private:
 	Quad ui_[2];
 	Quad button_{};
 	Quad underBar_{};
-	Quad number_{};
+	Quad number_[4];
 	Quad stage_{};
 	Quad human_{};
 	Quad evaluation_{};
@@ -85,8 +85,14 @@ private:
 
 	int evaluationPoint_ = 0;
 	int32_t score_ = 0;
+	int score2_ = 0;
+	int score3_ = 0;
+	int score4_ = 0;
 	int stageNum_ = 0;
 	int changeNext_ = 1;
+
+	int num_[4];
+	int numberSize_ = 64;
 
 	Vector2 buttonStartRad_{};
 	Vector2 buttonStopRad_{};
