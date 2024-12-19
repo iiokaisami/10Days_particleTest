@@ -32,29 +32,8 @@
     <ClCompile Include="C:\KamataEngine\Adapter\Novice.cpp">
       <Filter>KamataEngine\Adapter</Filter>
     </ClCompile>
-    <ClCompile Include="C:\KamataEngine\DirectXGame\2d\ImGuiManager.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\StringUtility.cpp">
       <Filter>KamataEngine\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="BrockEmitter.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="BrockParticle.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveParticle.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveEmitter.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Select.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Result.cpp">
-      <Filter>KamataEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,12 +108,5 @@
     <ClInclude Include="C:\KamataEngine\DirectXGame\base\StringUtility.h">
       <Filter>KamataEngine\Include</Filter>
     </ClInclude>
-    <ClInclude Include="BrockEmitter.h" />
-    <ClInclude Include="BrockParticle.h" />
-    <ClInclude Include="MoveParticle.h" />
-    <ClInclude Include="MoveEmitter.h" />
-    <ClInclude Include="Select.h" />
-    <ClInclude Include="Result.h" />
-    <ClInclude Include="Easing.h" />
   </ItemGroup>
 </Project>
